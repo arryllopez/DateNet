@@ -6,7 +6,7 @@ body {
 }
 .v1_2 {
   width: 100%;
-  height: 1024px;
+  height: 1080px;
   background: rgba(255,255,255,1);
   opacity: 1;
   position: relative;
@@ -44,7 +44,7 @@ body {
   color: rgba(237,14,92,1);
   position: absolute;
   top: 47px;
-  left: 516px;
+  left: 36px;
   font-family: Inter;
   font-weight: Regular;
   font-size: 20px;
@@ -60,7 +60,7 @@ body {
   opacity: 1;
   position: absolute;
   top: 32px;
-  left: 222px;
+  left: 258px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom-left-radius: 4px;
@@ -88,7 +88,7 @@ body {
   opacity: 1;
   position: absolute;
   top: 33px;
-  left: 388px;
+  left: 92px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom-left-radius: 4px;
@@ -116,16 +116,16 @@ body {
   background-size: cover;
   opacity: 1;
   position: absolute;
-  top: 141px;
-  left: 53px;
+  top: 149px;
+  left: 181px;
   overflow: hidden;
 }
 .v2_75 {
   width: 525px;
   color: rgba(0,0,0,1);
   position: absolute;
-  top: 149px;
-  left: 651px;
+  top: 148px;
+  left: 397px;
   font-family: Jersey 15;
   font-weight: Regular;
   font-size: 36px;
@@ -136,8 +136,8 @@ body {
   width: 525px;
   color: rgba(0,0,0,1);
   position: absolute;
-  top: 575px;
-  left: 107px;
+  top: 617px;
+  left: 225px;
   font-family: Jersey 15;
   font-weight: Regular;
   font-size: 36px;
@@ -154,6 +154,6 @@ body {
   opacity: 1;
   position: absolute;
   top: 601px;
-  left: 631px;
+  left: 437px;
   overflow: hidden;
 }
