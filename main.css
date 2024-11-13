@@ -1,0 +1,78 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #0000FF;
+  background-color: #ffffff;
+}
+
+.logo {
+  font-family: 'Newsreader', serif;
+  font-size: 24px;
+  color: #d50032;
+}
+
+.nav-link {
+  margin-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.signup-btn, .login-btn {
+  background-color: #d50032;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.signup-btn:hover, .login-btn:hover {
+  background-color: #b0002a;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero-img {
+  width: 40%;
+  border-radius: 8px;
+}
+
+.hero-text {
+  width: 40%;
+  padding: 1rem;
+}
+
+.hero-text p {
+  font-size: 18px;
+  font-family: 'Newsreader', serif;
+}
+
+/* Description Section */
+.description {
+  padding: 2rem;
+  text-align: center;
+  font-family: 'Newsreader', serif;
+  font-size: 18px;
+}
