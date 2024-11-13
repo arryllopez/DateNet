@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DateNet</title>
+    <title>DateNet - Login</title>
     <link href="https://fonts.googleapis.com/css?family=Newsreader|Inter|Jersey+15&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <!-- Keep the navigation header as it is -->
     <header class="header">
         <span class="logo">DateNet</span>
         <nav>
@@ -18,13 +19,26 @@
         </nav>
     </header>
 
-    <section class="">
-        <p>This is login page</p>
-    </section>
+    <!-- New container for the image and form sections -->
+    <div class="content-container">
+        <div class="image-section"></div>
+        
+        <section class="form-overlay">
+            <h2>Login</h2>
+            <form action="/login" method="POST" class="form">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit" class="form-btn">Log In</button>
+            </form>
+            
+            <p class="form-text">Don't have an account? <a href="signup.html" class="form-link">Sign up</a></p>
+        </section>
+    </div>
 
-    <section class="">
-    </section>
-
-    <script src="script.js"></script>
+    <script src="Js\script.js"></script>
 </body>
 </html>
