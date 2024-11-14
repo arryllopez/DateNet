@@ -11,6 +11,27 @@
   align-items: center;
 }
 
+/* Logo Container*/
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container .logo-image {
+  width: 50px;
+  height: auto;
+}
+
+.logo-container span {
+  margin-right : 10px;
+}
+
+.logo-container span .red-text {
+  color : red;
+}
+
+
 /* Background Image Section */
 .image-section {
   background-color: #f0f0f0;
