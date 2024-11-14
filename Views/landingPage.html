@@ -5,36 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DateNet</title>
     <link href="https://fonts.googleapis.com/css?family=Newsreader|Inter|Jersey+15&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
+    <!-- <link rel="stylesheet" href="main.css"> -->
     <link rel="stylesheet" href="landingPage.css">
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+});
+
+    </script>
 <body>
     <header class="header">
-        <div class="logo-container">
-            <span class="logo-text">DateNet</span>
-            <img class = "logo-image" src = "Images/Untitled design (3).png" alt = logoDateNet>
+        <div class="navbar">
+            <div class="logo-container">
+                <span class="logo-text">DateNet</span>
+                <img class = "logo-image" src = "Images/Untitled design (3).png" alt = logoDateNet>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                </ul>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="menu-icon"></span>
+                </button>
+            </nav>
         </div>
-        <nav>
-            <!-- <a href="index.html" class="nav-link">Home</a> -->
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="signup.html" class="nav-link signup-btn">Sign Up</a>
-            <a href="login.html" class="nav-link login-btn">Log In</a>
-        </nav>
     </header>
 
     <div class="content-container">
-        <div class="image-section"></div>
-        <section class="hero">
-            <h2>Landing Page</h2>
-            <img src="Images/v2_73.png" alt="Networking Image 1" class="hero-img">
-            <div class="hero-text">
-                <p>DateNet is Designed for University students and young professionals, our app helps you find meaningful relationships, whether you're searching for a Friend , romantic partner or looking to expand your career network.</p>
+        <!-- <div class="image-section"></div> -->
+        <div class="center-content">
+            <h1>Welcome to DateNet</h1>
+            <p>Find meaningful relationships with like-minded university students and young professionals.</p>
+            <div class="button-container">
+                <a href="signup.html" class="signup-btn">Sign Up</a>
+                <a href="login.html" class="login-btn">Log In</a>
             </div>
-            <img src="Images/v3_3.png" alt="Networking Image 2" class="hero-img">
-        </section>
-
+        </div>
     </div>
-
+    <footer class="footer">
+        <p>&copy; 2024 DateNet. All rights reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>

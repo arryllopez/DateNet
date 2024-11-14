@@ -1,12 +1,182 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Navbar */
+.header {
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  border-bottom: 2px solid #0000FF;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo text styling */
+.logo-text {
+  font-family: 'Newsreader', serif;
+  font-size: 24px;
+  color: #d50032;
+  margin-bottom: 5px; /* Add space between text and image */
+}
+
+/* Logo image styling */
+.logo-image {
+  max-width: 50px; /* Adjust as needed */
+  max-height: 50px;
+  display: block;
+}
+
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-link {
+  margin-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #000;
+}
+
+/* Centered Content */
 .content-container {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 70px); /* Full height minus header height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 70px); /* Full height minus navbar */
+  text-align: center;
+  background-image: url('Images/backgroundOTech.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.center-content {
+  color: #fff;
+  max-width: 600px;
+}
+
+.center-content h1 {
+  font-size: 48px;
+  font-family: 'Newsreader', serif;
+  margin-bottom: 10px;
+}
+
+.center-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.signup-btn, .login-btn {
+  background-color: #d50032;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.signup-btn:hover, .login-btn:hover {
+  background-color: #b0002a;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #333;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Responsive Navbar */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+}
+
+.menu-icon {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: #000;
+  position: relative;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background-color: #000;
+}
+
+.menu-icon::before {
+  top: -10px;
+}
+
+.menu-icon::after {
+  top: 10px;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 100;
   }
-  
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+}
