@@ -56,6 +56,9 @@ a {
   height : auto;
   display: block;
 }
+.logo-image:hover{
+  cursor: pointer;
+}
 
 
 /* Navigation links */
