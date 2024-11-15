@@ -1,6 +1,6 @@
 // Handle Matching logic 
-const User = require('Js/models/User');
-const UserPreferences = require('Js/models/UserPreferences');
+const User = require('../Models/User');
+const UserPreferences = require('../Models/UserPreferences');
 
 // Matching logic
 async function findMatches(req, res) {
