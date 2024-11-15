@@ -28,6 +28,7 @@
   .image-section.loaded {
     background-image: url('Images/OTUpic.jpg');
     transition: background-image 1s ease-in-out;
+    filter: blur(8px);
   }
   
   /* Define each slide's background image */
