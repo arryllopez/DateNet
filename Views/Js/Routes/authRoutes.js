@@ -1,6 +1,4 @@
-//user authentication for signup, login
-
-const express = require('express');
+//user authenticationconst express = require('express');
 const { signup, login } = require('../controllers/authController');
 const router = express.Router();
 
