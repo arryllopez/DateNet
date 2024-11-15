@@ -24,7 +24,8 @@ async function signup(req, res) {
 
         res.status(201).json({ message: 'User registered successfully', userId: newUser.id });
     } catch (error) {
-        res.status(500).json({ message: 'Error registering user', error });
+        console.error('Error during signup:', error); // Log the error
+        res.status(500).json({ message: 'Internal server error', error });
     }
 }
 

@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // Initialize routes
 
-// app.use(cors());
+app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/match', matchRoutes);
 
