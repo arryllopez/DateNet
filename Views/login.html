@@ -31,7 +31,7 @@
         
         <section class="form-overlay">
             <h2>Login</h2>
-            <form action="/login" method="POST" class="form">
+            <form id="loginForm" class="form">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
                 
@@ -42,9 +42,39 @@
             </form>
             
             <p class="form-text">Don't have an account? <a href="signup.html" class="form-link">Sign up</a></p>
+            <p id="response"></p>
         </section>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e){
+
+            e.preventDefault();
+
+            const Username = document.getElementById('username').value;
+            const Password = document.getElementById('password').value;
+
+            const response = await fetch('/api/auth/login',{
+                method:'POST',
+                headers:{
+                    'Contect-Type': 'application/json',
+                },
+                body:JSON.stringify({username,password}),
+            });
+
+            const data = await response.json();
+            if(response.ok){
+                let Response = document.getElementById('response').innerHTML;
+                Response="Login Successful";
+                console.log('Login Successful');
+                localStorage.setItem('token', data.token);
+                window.location.href = 'profile.html';
+            }else{
+                alert(`Error: ${data.message}`);
+            }
+
+        });
+    </script>
 </body>
 </html>

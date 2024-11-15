@@ -52,7 +52,7 @@
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
+    width: relative;
     text-align: center;
   }
   
@@ -65,7 +65,7 @@
   
   .form {
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
     gap: 15px;
   }
   
@@ -76,7 +76,9 @@
   }
   
   .form input[type="text"],
-  .form input[type="email"],
+  .form input[type="text"],
+  .form input[type="text"],
+  /* .form input[type="email"], */
   .form input[type="email"],
   .form input[type="password"]  {
     padding: 10px;
