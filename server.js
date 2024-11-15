@@ -5,11 +5,14 @@ const authRoutes = require('./Views/Js/Routes/authRoutes');
 const matchRoutes = require('./Views/Js/Routes/matchRoutes');
 const errorHandler = require('./Views/Js/middleware/errorHandler'); // Correct path for errorHandler
 const sequelize = require('./Views/Js/Config/db'); // Import database connection
+const cors= require('cors');
 
 const app = express();
 app.use(bodyParser.json());
 
 // Initialize routes
+
+// app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/match', matchRoutes);
 
