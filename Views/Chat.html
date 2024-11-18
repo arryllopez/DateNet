@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-User  Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 500px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 50px auto;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .received {
+            background-color: #e1ffc7;
+            align-self: flex-start;
+        }
+
+        .sent {
+            background-color: #d1e7ff;
+            align-self: flex-end;
+        }
+
+        input[type="text"] {
+            border: none;
+            padding: 10px;
+            flex: 1;
+            border-radius: 0;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="send-button">Send</button>
+    </div>
+    <script>
+        let userName = prompt("Enter your name:") || "User ";
+
+        // Load existing messages from localStorage
+        function loadMessages() {
+            const chatBox = document.getElementById('chat-box');
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', message.type);
+                messageDiv.innerHTML = `<strong>${message.user}:</strong> ${message.text}`;
+                chatBox.appendChild(messageDiv);
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Save a message to localStorage
+        function saveMessage(user, text, type) {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push({ user, text, type });
+            localStorage.setItem('messages', JSON.stringify(messages));
+        }
+
+        document.getElementById('send-button').addEventListener('click', function() {
+            const inputField = document.getElementById('user-input');
+            const messageText = inputField.value;
+
+            if (messageText.trim() !== "") {
+                const chatBox = document.getElementById('chat-box');
+
+                // Create a new sent message
+                const newMessage = document.createElement('div');
+                newMessage.classList.add('message', 'sent');
+                newMessage.innerHTML = `<strong>${userName}:</strong> ${messageText}`;
+                chatBox.appendChild(newMessage);
+
+                // Save the message
+                saveMessage(userName, messageText, 'sent');
+
+                // Clear the input field
+                inputField.value = '';
+
+                // Scroll to the bottom of the chat box
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // Simulate a received message after a short delay
+                setTimeout(() => {
+                    const receivedMessage = document.createElement('div');
+                    receivedMessage.classList.add('message', ' received');
+                    receivedMessage.innerHTML = `<strong>Other User:</strong> You said: ${messageText}`;
+                    chatBox.appendChild(receivedMessage);
+
+                    // Save the simulated received message
+                    saveMessage('Other User', `You said: ${messageText}`, 'received');
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // Load messages when the page is loaded
+        window.onload = loadMessages;
+    </script>
+</body>
+</html>

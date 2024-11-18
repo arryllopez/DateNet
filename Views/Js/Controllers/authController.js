@@ -7,12 +7,38 @@ const User = require('../Models/User');
 // Signup controller
 async function signup(req, res) {
     console.log("Request body:", req.body); // Debugging log
-    const { username, password, email, firstName, lastName } = req.body;
+    const { username, password, email, firstName, lastName, dateOfBirth } = req.body;
 
     // if (!password) {
     //     return res.status(400).json({ message: "Password is required" });
     // }
     try {
+        // Validate age
+        const today = new Date();
+        const birthDate = new Date(dateOfBirth);
+        const age = today.getFullYear() - birthDate.getFullYear();
+        // const monthDiff = today.getMonth() - birthDate.getMonth();
+        const isUnder18 = age < 18 || (age === 18 && today < new Date(birthDate.setFullYear(today.getFullYear())));
+
+        if (isUnder18) {
+            return res.status(400).json({ message: 'You must be 18 or older to sign up.' });
+        }
+        const existingUser = await User.findOne({
+            where: { email },
+        });
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email is already in use. Please use a different email.' });
+        }
+        const existingUsername = await User.findOne({
+            where: { username },
+        });
+
+        if (existingUsername) {
+            return res.status(400).json({ message: 'Username is already taken. Please choose a different username.' });
+        }
+
+
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -23,12 +49,17 @@ async function signup(req, res) {
             email,
             firstName,
             lastName,
+            dateOfBirth,
             // Additional fields can be added here
         });
 
         res.status(201).json({ message: 'User registered successfully', userId: newUser.id });
     } catch (error) {
         console.error('Error during signup:', error); // Log the error
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            // Handle duplicate entry error
+            return res.status(400).json({ message: 'A user with this email already exists.' });
+        }
         res.status(500).json({ message: 'Internal server error'});
     }
 }
@@ -66,4 +97,37 @@ async function login(req, res) {
     }
 }
 
-module.exports = { signup, login };
+// async function checkUsername(req, res) {
+//     const { username } = req.body;
+
+//     try {
+//         const existingUser = await User.findOne({ where: { username } });
+//         if (existingUser) {
+//             return res.status(400).json({ message: 'Username is already taken.' });
+//         }
+//         res.status(200).json({ message: 'Username is available.' });
+//     } catch (error) {
+//         console.error('Error checking username:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// }
+
+// // Check if email exists
+// async function checkEmail(req, res) {
+//     const { email } = req.body;
+
+//     try {
+//         const existingUser = await User.findOne({ where: { email } });
+//         if (existingUser) {
+//             return res.status(400).json({ message: 'Email is already in use.' });
+//         }
+//         res.status(200).json({ message: 'Email is available.' });
+//     } catch (error) {
+//         console.error('Error checking email:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// }
+
+// module.exports = { signup, login, checkUsername, checkEmail };
+
+module.exports = { signup, login};

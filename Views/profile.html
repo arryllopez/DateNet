@@ -3,26 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DateNet</title>
-    <link href="https://fonts.googleapis.com/css?family=Newsreader|Inter|Jersey+15&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e91e63;
+    color: white;
+    padding: 10px 20px;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+form input,
+form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #c2185b;
+}
+
+    </style>
 </head>
 <body>
-    <header class="header">
-        <span class="logo">DateNet</span>
-        <nav>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="signup.html" class="nav-link signup-btn">Sign Up</a>
-            <a href="login.html" class="nav-link login-btn">Log In</a>
-        </nav>
+    <header>
+        <div class="navbar">
+            <span id="greeting">Hello, [User]</span>
+            <button id="logoutBtn">Logout</button>
+        </div>
     </header>
+    <main>
+        <div class="profile-container">
+            <h1>Your Profile</h1>
+            <form id="profileForm">
+                <div class="profile-picture-section">
+                    <label for="profilePic">Main Profile Picture</label>
+                    <input type="file" id="profilePic" name="profilePic">
+                    <label for="displayPic">Additional Picture</label>
+                    <input type="file" id="displayPic" name="displayPic">
+                </div>
 
-    <section class="">
-    </section>
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name" disabled>
 
-    <section class="">
-    </section>
+                <label for="age">Age*</label>
+                <input type="number" id="age" name="age" disabled>
 
-    <script src="script.js"></script>
+                <label for="gender">Gender*</label>
+                <div>
+                    <button type="button" id="maleBtn">Male</button>
+                    <button type="button" id="femaleBtn">Female</button>
+                </div>
+
+                <label for="interests">Interests</label>
+                <input type="text" id="interests" name="interests">
+
+                <label for="hobbies">Hobbies</label>
+                <textarea id="hobbies" name="hobbies"></textarea>
+
+                <label for="business">If you were to start a business, what would it be?</label>
+                <textarea id="business" name="business"></textarea>
+
+                <label for="futureGoals">What are your goals for the future?</label>
+                <textarea id="futureGoals" name="futureGoals"></textarea>
+
+                <label for="importantThing">What is the most important thing in your life?</label>
+                <textarea id="importantThing" name="importantThing"></textarea>
+
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio"></textarea>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </main>
+    <script src="profile.js"></script>
 </body>
 </html>

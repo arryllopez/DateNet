@@ -29,6 +29,11 @@ const User = sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: false
         },
+        dateOfBirth: {
+            type: DataTypes.DATE,
+            allowNull: false, // Or false if mandatory
+            field: 'DateOfBirth', // Match the exact database column name
+        },
     // ... other fields based on your table schema
 }, {
     tableName: 'users', // Explicitly define the table name
