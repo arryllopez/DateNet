@@ -54,22 +54,26 @@
 
             const Username = document.getElementById('username').value;
             const Password = document.getElementById('password').value;
-
-            const response = await fetch('/api/auth/login',{
+                if (!username || !password) {
+        alert('Please enter both username and password');
+        return;
+    }
+            const response = await fetch('http://localhost:3000/api/auth/login',{
                 method:'POST',
                 headers:{
-                    'Contect-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body:JSON.stringify({username,password}),
+                body:JSON.stringify({username: Username,password: Password}),
             });
 
             const data = await response.json();
             if(response.ok){
-                let Response = document.getElementById('response').innerHTML;
-                Response="Login Successful";
+                const responseElement = document.getElementById('response');
+                responseElement.textContent = "logIn Successful";
+                responseElement.style.color = "green";
                 console.log('Login Successful');
                 localStorage.setItem('token', data.token);
-                window.location.href = 'profile.html';
+                window.location.href = 'about.html';
             }else{
                 alert(`Error: ${data.message}`);
             }

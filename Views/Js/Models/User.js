@@ -2,10 +2,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../Config/db');
 
 const User = sequelize.define('users', {
-
+    UserId: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     username: { 
         type: DataTypes.STRING,
-         unique: true 
+        allowNull: false,
+        unique: true, 
         },
     passwordHash: {
         type: DataTypes.STRING,
@@ -13,7 +18,8 @@ const User = sequelize.define('users', {
     },
     email: { 
         type: DataTypes.STRING,
-         unique: true 
+        allowNull: false,
+        unique: true, 
         },
     firstName: {
         type: DataTypes.STRING,
@@ -22,8 +28,10 @@ const User = sequelize.define('users', {
     lastName: {
         type: DataTypes.STRING,
         allowNull: false
-        }
+        },
     // ... other fields based on your table schema
+}, {
+    tableName: 'users', // Explicitly define the table name
+    timestamps: false,   // Use createdAt and updatedAt columns
 });
-
 module.exports = User;

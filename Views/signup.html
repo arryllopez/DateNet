@@ -59,8 +59,7 @@
                         <td><input type="password" id="password" name="password" required placeholder="Password"></td>
                         <td><input type="password" id="Cpassword" name="Cpassword" required placeholder="Confirm Password"></td>
                     </tr>
-                </table>
-                
+                </table> 
                 <button type="submit" class="form-btn">Sign Up</button>
             </form>
             <p class="form-text">Already a user? <a href="login.html" class="form-link">Log in</a></p>
@@ -89,24 +88,29 @@
                 alert("Passwords do not match!");
                 return;
              }
-            const response = await fetch('/api/auth/signup',{
+             try{
+            const response = await fetch('http://localhost:3000/api/auth/signup',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ UserName, FirstName, LastName, Email,Password}),
+                body: JSON.stringify({ username: UserName, firstName: FirstName, lastName: LastName, email: Email,password: Password}),
             });
 
             const data = await response.json();
             if(response.ok){
-                let Response = document.getElementById('response').innerHTML;
-                Response.textContent ="Signup Successful";
+                const responseElement = document.getElementById('response');
+                responseElement.textContent = "Signup Successful";
+                responseElement.style.color = "green";
                 console.log('Signup successful');
-                
-                window.location.href = 'login.html';
+                setTimeout(() => (window.location.href = 'login.html'), 2000);
             }else{
                 alert(`Error: ${data.message}`);
             }
+        }catch(error){
+            alert("An error occurred. Please try again later.");
+            console.error(error);
+        }
         });
     </script>
 </body>
