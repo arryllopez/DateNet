@@ -76,6 +76,7 @@ async function login(req, res) {
     try {
         // Find user in the database
         const user = await User.findOne({ where: { username } });
+        console.log('User found:', user);
         if (!user) {
             console.log('User not found for username:', username);
             return res.status(400).json({ message: 'User not found' });
@@ -89,7 +90,7 @@ async function login(req, res) {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user.UserId }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ message: 'Login successful', token });
     } catch (error) {
         console.error('Error during login:', error);
@@ -97,6 +98,8 @@ async function login(req, res) {
     }
 }
 
+
+// Real time validation trial but ended in failure 
 // async function checkUsername(req, res) {
 //     const { username } = req.body;
 
@@ -130,4 +133,43 @@ async function login(req, res) {
 
 // module.exports = { signup, login, checkUsername, checkEmail };
 
-module.exports = { signup, login};
+async function getUserProfile(req, res) {
+    try {
+        const userId = req.user.userId;
+        // const user = await User.findOne({ where: { id: req.user.userId } });
+        if (!userId) {
+            return res.status(404).json({ message: 'Invalid user ID' });
+        }
+        // res.json(user);
+        const user = await User.findByPk(userId, {
+            attributes: { exclude: ['passwordHash'] } // Exclude sensitive fields like password
+        });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(user); 
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+async function updateUserProfile(req, res) {
+    try {
+        const userId = req.user.userId;
+        const { bio, interests, hobbies, business, futureGoals, importantThing } = req.body;
+
+        await User.update(
+            { bio, interests, hobbies, business, futureGoals, importantThing, gender, profilePhoto, displayPic1, displayPic2 },
+    { where: { UserId: userId } }
+        );
+
+        res.json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+module.exports = { signup, login, getUserProfile, updateUserProfile};
