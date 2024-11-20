@@ -4,13 +4,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
-        });
+          });
 
         const data = await response.json();
         if (response.ok) {
-            document.getElementById('greeting').innerHTML =" Hello " +`${data.firstName}`;
+            const calculateAge = (dob) => {
+                const birthDate = new Date(dob);
+                const diff = Date.now() - birthDate.getTime();
+                return new Date(diff).getUTCFullYear() - 1970;
+            };
+
+            document.getElementById('greeting').innerHTML =" Welcome " +`${data.firstName}`;
             document.getElementById('name').value = `${data.firstName} ${data.lastName}`;
-            document.getElementById('age').value = data.age;
+            document.getElementById('age').value = calculateAge(data.dateOfBirth);
             document.getElementById('bio').value = data.bio;
             document.getElementById('interests').value = data.interests;
         } else {
@@ -29,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const business = document.getElementById('business').value;
         const futureGoals = document.getElementById('futureGoals').value;
         const importantThing = document.getElementById('importantThing').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const lookingFor = document.getElementById('lookingFor').value;
     
         try {
             const response = await fetch('http://localhost:3000/api/auth/profile', {
@@ -37,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify({ bio, interests, hobbies, business, futureGoals, importantThing }),
+                body: JSON.stringify({bio, interests, hobbies, business, futureGoals, importantThing, gender, lookingFor }),
             });
     
             const data = await response.json();

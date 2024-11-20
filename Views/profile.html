@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="navbar">
-            <span id="greeting">  </span>
+            <span id="greeting"></span>
             <button id="logoutBtn">Logout</button>
         </div>
     </header>
@@ -33,12 +33,55 @@
 
                 <label for="gender">Gender*</label>
                 <div>
-                    <button type="button" id="maleBtn">Male</button>
-                    <button type="button" id="femaleBtn">Female</button>
+                    <input type="radio" id="male" name="gender" value="Male">
+                    <label for="male">Male</label><br>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label><br>
+                    <input type="radio" id="other" name="gender" value="Other">
+                    <label for="other">Other</label>
                 </div>
 
-                <label for="interests">Interests</label>
-                <input type="text" id="interests" name="interests">
+                 <!--Preferred Age attribute-->
+                 <label for="prefage">Preferred Age Range</label>
+                 <select id="prefage" name="prefage">
+                     <option value="18-25">18-25</option>
+                     <option value="25-32">25-32</option>
+                 </select>
+
+                
+                <!--Preferred Gender attribute-->
+                <label for="prefgender">Preferred Gender*</label>
+                    <select id="prefgender" name="prefgender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                <!--Preferred Interests attribute-->
+                <label for="prefint"> PreferredInterest</label>
+                    <label>Basic</label>
+                    <input type="checkbox" name="interests" value="Reading"> Reading
+                    <input type="checkbox" name="interests" value="Traveling"> Traveling
+                    <input type="checkbox" name="interests" value="Sports"> Sports
+                    <input type="checkbox" name="interests" value="Cooking"> Cooking<br>
+                    <label>Knowlegde wise</label>
+                    <input type="checkbox" name="interests" value="Coding"> 
+                    <input type="checkbox" name="interests" value="Astronomy">
+
+               
+
+                <!--Relation User is lookingFor attribute-->
+                <label for="lookingfor">What Kind of Relation are you looking for?</label>
+                <select id="lookingfor" name="lookingfor">
+                    <option value="LongTerm">Long Term Relationship</option>
+                    <option value="ShortTerm">Short Term Relationship</option>
+                    <option value="AFriend">A Friend</option>
+                    <option value="BusinessNetwork">Business Network</option>
+                    <option value="Coworker">Co-Worker for a project</option>
+                </select>
+
+                <label for="selfinterests">Your Interests</label>
+                <input type="text" id="selfinterests" name="selfinterests">
 
                 <label for="hobbies">Hobbies</label>
                 <textarea id="hobbies" name="hobbies"></textarea>
@@ -59,6 +102,110 @@
             </form>
         </div>
     </main>
-    <script src="profile.js"></script>
+    <!-- <script src="profile.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('http://localhost:3000/api/auth/profile', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+        //   const responseforpreference = await fetch('http://localhost:3000/api/auth/preference', {
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem('token')}`,
+        //     },
+        //   });
+
+        const data = await response.json();
+        // const dataforpreference = await responseforpreference.json();
+        if (response.ok) {
+            const calculateAge = (dob) => {
+                const birthDate = new Date(dob);
+                const diff = Date.now() - birthDate.getTime();
+                return new Date(diff).getUTCFullYear() - 1970;
+            };
+
+            document.getElementById('greeting').innerHTML =" Welcome " +`${data.firstName}`;
+            document.getElementById('name').value = `${data.firstName} ${data.lastName}`;
+            document.getElementById('age').value = calculateAge(data.dateOfBirth);
+        } else {
+            alert(data.message || 'Error fetching profile data.');
+        }
+    } catch (error) {
+        console.error('Error fetching profile data:', error);
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+    
+        const bio = document.getElementById('bio').value;
+        const selfinterests = document.getElementById('selfinterests').value;
+        const hobbies = document.getElementById('hobbies').value;
+        const business = document.getElementById('business').value;
+        const futureGoals = document.getElementById('futureGoals').value;
+        const importantThing = document.getElementById('importantThing').value;
+        const gender = document.querySelector('input[name="gender"]:checked');
+        if (gender) {
+            console.log(gender.value);
+        } else {
+            console.error("No gender selected");
+        }
+        const PreferredAge = document.getElementById('prefage').value;
+        const PreferredGender = document.getElementById('prefgender').value;
+        
+        const lookingFor = document.getElementById('lookingfor').value;
+
+        const getSelectedCheckboxValues = () => {
+            const checkboxes = document.querySelectorAll('input[name="interests"]:checked');
+            // Map through NodeList and get the value of each checkbox, then join with a comma
+            const values = Array.from(checkboxes).map(checkbox => checkbox.value).join(', ');
+            return values;
+        };
+
+        const PreferredInterests = getSelectedCheckboxValues();
+    
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/profile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({gender: gender, bio,interests: selfinterests, hobbies: hobbies,businessToStart: business,futureGoals: futureGoals, mostImportantThing:importantThing,gender: gender,}),
+            });
+            const data = await response.json();
+
+            const responseforpreference = await fetch('http://localhost:3000/api/auth/preference', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({
+
+                    preferredAge: PreferredAge,
+                    preferredgender: PreferredGender,
+                    PreferredInterests: PreferredInterests,
+                    lookingFor: lookingFor,
+                }),
+            });
+    
+    
+            
+            const dataforpreference = await responseforpreference.json();
+            if (response.ok && responseforpreference.ok) {
+                alert('Profile updated successfully!');
+            } else {
+                alert(data.message || 'Error updating profile.');
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    });
+    
+});
+
+    </script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
+const UserPreferences = require('../Models/UserPreferences');
 
 // Signup controller
 async function signup(req, res) {
@@ -157,10 +158,10 @@ async function getUserProfile(req, res) {
 async function updateUserProfile(req, res) {
     try {
         const userId = req.user.userId;
-        const { bio, interests, hobbies, business, futureGoals, importantThing } = req.body;
+        const {gender, bio, interests, hobbies, business, futureGoals, importantThing } = req.body;
 
         await User.update(
-            { bio, interests, hobbies, business, futureGoals, importantThing, gender, profilePhoto, displayPic1, displayPic2 },
+            { gender, bio, interests, hobbies, business, futureGoals, importantThing },
     { where: { UserId: userId } }
         );
 
@@ -170,6 +171,29 @@ async function updateUserProfile(req, res) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+async function updateUserPreference(req, res) {
+    try {
+        const userId = req.user.userId;
+        const {  preferredAge, PreferredInterests, lookingFor, preferredgender} = req.body;
+
+        await UserPreferences.update(
+            {  preferredAge, PreferredInterests, lookingFor, preferredgender},
+            { where: {  UserId: userId } }
+        
+        );
+
+        if (updated[0] > 0) {
+            res.json({ message: 'Preferences updated successfully' });
+        } else {
+            res.status(404).json({ message: 'Preferences not found' });
+        }
+
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 
-module.exports = { signup, login, getUserProfile, updateUserProfile};
+
+module.exports = { signup, login, getUserProfile, updateUserProfile , updateUserPreference};

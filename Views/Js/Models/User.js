@@ -37,6 +37,7 @@ const User = sequelize.define('users', {
     gender: {
         type: DataTypes.STRING,
         allowNull: true,
+        field: 'Gender',
     },
     profilePhoto: {
         type: DataTypes.STRING,
