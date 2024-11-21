@@ -32,6 +32,16 @@
             <form id="signupForm" class="form">
                 <table>
                     <tr>
+                        <p id="dobAlert" style="color: red; display: none;">You must be 18 or older to Sign Up!</p>
+                        <td colspan="2"><label for="dob">Date of Birth</label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="date" id="dob" name="dob" required placeholder="Date of Birth">
+                        </td>
+                    </tr>
+                    
+                    <tr>
                         <td><label for="firstname">First Name</label></td>
                         <td><label for="lastname">Last Name</label></td>
                     </tr>
@@ -39,17 +49,21 @@
                         <td><input type="text" id="firstname" name="firstname" required placeholder="First Name"></td>
                         <td><input type="text" id="lastname" name="lastname" required placeholder="Last Name"></td>
                     </tr>
+                    
                     <tr>
+                        <span id="emailAlert" style="color: red; display: none;">Email is already in use.</span>
                         <td colspan="2"><label for="email">Email</label></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="email" id="email" name="email" required placeholder="Email"></td>
                     </tr>
                     <tr>
+                        <span id="usernameAlert" style="color: red; display: none;">Username is already taken.</span>
                         <td colspan="2"><label for="username">Username</label></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="text" id="username" name="username" required placeholder="Username"></td>
+                        
                     </tr>
                     <tr>
                         <td><label for="password">Password</label></td>
@@ -59,9 +73,8 @@
                         <td><input type="password" id="password" name="password" required placeholder="Password"></td>
                         <td><input type="password" id="Cpassword" name="Cpassword" required placeholder="Confirm Password"></td>
                     </tr>
-                </table>
-                
-                <button type="submit" class="form-btn">Sign Up</button>
+                </table> 
+                <button type="submit" id="submitBtn" class="form-btn">Sign Up</button>
             </form>
             <p class="form-text">Already a user? <a href="login.html" class="form-link">Log in</a></p>
             <p id="response"></p>
@@ -73,6 +86,102 @@
 
     <script src="script.js"></script>
     <script>
+        document.getElementById('dob').addEventListener('input', function () 
+        {
+            const dobInput = document.getElementById('dob').value; // Get the entered date
+            const dobAlert = document.getElementById('dobAlert'); // Get the alert message element
+            const submitBtn = document.getElementById('submitBtn'); // Get the submit button
+
+            if (dobInput) {
+                const dob = new Date(dobInput); // Convert to Date object
+                const today = new Date(); // Get today's date
+                const age = today.getFullYear() - dob.getFullYear();
+                const isUnder18 = age < 18 || (age === 18 && today < new Date(dob.setFullYear(today.getFullYear())));
+
+                if (isUnder18) {
+                    dobAlert.style.display = 'block'; // Show the alert
+                    submitBtn.disabled = true; // Disable the submit button
+                } else {
+                    dobAlert.style.display = 'none'; // Hide the alert
+                    submitBtn.disabled = false; // Enable the submit button
+                }
+            } else {
+                dobAlert.style.display = 'none'; // Hide the alert if DOB is cleared
+                submitBtn.disabled = false; // Enable the submit button
+            }
+        });
+       // Real-time validation for username
+// document.getElementById('username').addEventListener('input', async function (e) {
+//     const Username = e.target.value; // Get the entered username
+//     const usernameAlert = document.getElementById('usernameAlert'); // Reference to the alert span
+
+//     if (Username) {
+//         try {
+//             // Send a request to check if the username already exists
+//             const response = await fetch('http://localhost:3000/api/auth/checkUsername', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({ username: Username }),
+//             });
+
+//             const data = await response.json();
+
+//             if (!response.ok) {
+//                 // If username is taken, show the alert
+//                 usernameAlert.textContent = data.message || 'Username is already taken.';
+//                 usernameAlert.style.display = 'block';
+//             } else {
+//                 // If username is available, hide the alert
+//                 usernameAlert.style.display = 'none';
+//             }
+//         } catch (error) {
+//             console.error('Error checking username:', error);
+//             usernameAlert.textContent = 'Unable to check username availability.';
+//             usernameAlert.style.display = 'block';
+//         }
+//     } else {
+//         usernameAlert.style.display = 'none'; // Hide the alert if input is cleared
+//     }
+// });
+
+// // Real-time validation for email
+// document.getElementById('email').addEventListener('input', async function (e) {
+//     const Email = e.target.value; // Get the entered email
+//     const emailAlert = document.getElementById('emailAlert'); // Reference to the alert span
+
+//     if (Email) {
+//         try {
+//             // Send a request to check if the email already exists
+//             const response = await fetch('http://localhost:3000/api/auth/checkEmail', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({ email: Email }),
+//             });
+
+//             const data = await response.json();
+
+//             if (!response.ok) {
+//                 // If email is taken, show the alert
+//                 emailAlert.textContent = data.message || 'Email is already in use.';
+//                 emailAlert.style.display = 'block';
+//             } else {
+//                 // If email is available, hide the alert
+//                 emailAlert.style.display = 'none';
+//             }
+//         } catch (error) {
+//             console.error('Error checking email:', error);
+//             emailAlert.textContent = 'Unable to check email availability.';
+//             emailAlert.style.display = 'block';
+//         }
+//     } else {
+//         emailAlert.style.display = 'none'; // Hide the alert if input is cleared
+//     }
+// });
+
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
 
             e.preventDefault();
@@ -84,28 +193,31 @@
             const Email = document.getElementById('email').value;
             const Password = document.getElementById('password').value;
             const CPassword = document.getElementById('Cpassword').value;
+             const Dob = document.getElementById('dob').value;
 
-            if (Password !== CPassword) {
-                alert("Passwords do not match!");
-                return;
-             }
-            const response = await fetch('/api/auth/signup',{
+
+             try{
+            const response = await fetch('http://localhost:3000/api/auth/signup',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ UserName, FirstName, LastName, Email,Password}),
+                body: JSON.stringify({ username: UserName, firstName: FirstName, lastName: LastName, email: Email,password: Password, dateOfBirth: Dob,}),
             });
 
             const data = await response.json();
             if(response.ok){
-                let Response = document.getElementById('response').innerHTML;
-                Response.textContent ="Signup Successful";
+                const responseElement = document.getElementById('response');
+                responseElement.textContent = "Signup Successful";
+                responseElement.style.color = "green";
                 console.log('Signup successful');
-                
-                window.location.href = 'login.html';
+                setTimeout(() => (window.location.href = 'login.html'), 2000);
             }else{
                 alert(`Error: ${data.message}`);
+            }
+            }catch(error){
+                alert("An error occurred. Please try again later.");
+                console.error(error);
             }
         });
     </script>
