@@ -25,21 +25,14 @@
                     <input type="file" id="displayPic" name="displayPic">
                 </div>
 
-                <label for="name">Name*</label>
+                <label for="name">Name</label>
                 <input type="text" id="name" name="name" disabled>
 
-                <label for="age">Age*</label>
+                <label for="age">Age</label>
                 <input type="number" id="age" name="age" disabled>
 
-                <label for="gender">Gender*</label>
-                <div>
-                    <input type="radio" id="male" name="gender" value="Male">
-                    <label for="male">Male</label><br>
-                    <input type="radio" id="female" name="gender" value="Female">
-                    <label for="female">Female</label><br>
-                    <input type="radio" id="other" name="gender" value="Other">
-                    <label for="other">Other</label>
-                </div>
+                <label for="gender">Gender</label>
+                <input type="text" id="gender" name="gender" disabled>
 
                  <!--Preferred Age attribute-->
                  <label for="prefage">Preferred Age Range</label>
@@ -128,6 +121,7 @@
 
             document.getElementById('greeting').innerHTML =" Welcome " +`${data.firstName}`;
             document.getElementById('name').value = `${data.firstName} ${data.lastName}`;
+            document.getElementById('gender').value = `${data.gender}`;
             document.getElementById('age').value = calculateAge(data.dateOfBirth);
         } else {
             alert(data.message || 'Error fetching profile data.');
@@ -145,12 +139,6 @@
         const business = document.getElementById('business').value;
         const futureGoals = document.getElementById('futureGoals').value;
         const importantThing = document.getElementById('importantThing').value;
-        const gender = document.querySelector('input[name="gender"]:checked');
-        if (gender) {
-            console.log(gender.value);
-        } else {
-            console.error("No gender selected");
-        }
         const PreferredAge = document.getElementById('prefage').value;
         const PreferredGender = document.getElementById('prefgender').value;
         
@@ -172,7 +160,7 @@
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify({gender: gender, bio,interests: selfinterests, hobbies: hobbies,businessToStart: business,futureGoals: futureGoals, mostImportantThing:importantThing,gender: gender,}),
+                body: JSON.stringify({bio:bio,interests: selfinterests, hobbies: hobbies,businessToStart: business,futureGoals: futureGoals, mostImportantThing:importantThing,}),
             });
             const data = await response.json();
 

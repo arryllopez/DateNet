@@ -33,7 +33,7 @@
                 <table>
                     <tr>
                         <p id="dobAlert" style="color: red; display: none;">You must be 18 or older to Sign Up!</p>
-                        <td colspan="2"><label for="dob">Date of Birth</label></td>
+                        <td colspan="2"><label for="dob">Date of Birth*</label></td>
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -42,8 +42,8 @@
                     </tr>
                     
                     <tr>
-                        <td><label for="firstname">First Name</label></td>
-                        <td><label for="lastname">Last Name</label></td>
+                        <td><label for="firstname">First Name*</label></td>
+                        <td><label for="lastname">Last Name*</label></td>
                     </tr>
                     <tr>
                         <td><input type="text" id="firstname" name="firstname" required placeholder="First Name"></td>
@@ -51,23 +51,37 @@
                     </tr>
                     
                     <tr>
+                        <br>
+                        <td><label for="gender">Gender*</label></td>
+                        <td>
+                            <input type="radio" id="male" name="gender" value="Male">
+                            <label for="male">Male</label>
+                            <input type="radio" id="female" name="gender" value="Female">
+                            <label for="female">Female</label>
+                            <input type="radio" id="other" name="gender" value="Other">
+                            <label for="other">Other</label>
+                        </td>
+        
+                    </tr>
+                    
+                    <tr>
                         <span id="emailAlert" style="color: red; display: none;">Email is already in use.</span>
-                        <td colspan="2"><label for="email">Email</label></td>
+                        <td colspan="2"><label for="email">Email*</label></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="email" id="email" name="email" required placeholder="Email"></td>
                     </tr>
                     <tr>
                         <span id="usernameAlert" style="color: red; display: none;">Username is already taken.</span>
-                        <td colspan="2"><label for="username">Username</label></td>
+                        <td colspan="2"><label for="username">Username*</label></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="text" id="username" name="username" required placeholder="Username"></td>
                         
                     </tr>
                     <tr>
-                        <td><label for="password">Password</label></td>
-                        <td><label for="Cpassword">Confirm Password</label></td>
+                        <td><label for="password">Password*</label></td>
+                        <td><label for="Cpassword">Confirm Password*</label></td>
                     </tr>
                     <tr>
                         <td><input type="password" id="password" name="password" required placeholder="Password"></td>
@@ -190,6 +204,16 @@
             const UserName = document.getElementById('username').value;
             const FirstName = document.getElementById('firstname').value;
             const LastName = document.getElementById('lastname').value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value || null; // Ensure a string or null
+                if (gender) 
+                {
+                    console.log(gender.value);
+                } 
+                else 
+                {
+                    console.error("No gender selected");
+                }
+
             const Email = document.getElementById('email').value;
             const Password = document.getElementById('password').value;
             const CPassword = document.getElementById('Cpassword').value;
@@ -202,7 +226,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: UserName, firstName: FirstName, lastName: LastName, email: Email,password: Password, dateOfBirth: Dob,}),
+                body: JSON.stringify({ username: UserName, firstName: FirstName, lastName: LastName,gender: gender, email: Email,password: Password, dateOfBirth: Dob,}),
             });
 
             const data = await response.json();
