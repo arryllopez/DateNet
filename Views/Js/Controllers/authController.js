@@ -164,10 +164,10 @@ async function getUserProfile(req, res) {
 async function updateUserProfile(req, res) {
     try {
         const userId = req.user.userId;
-        const {gender, bio, interests, hobbies, business, futureGoals, importantThing } = req.body;
-
+        const {profilePhoto, displayPic1, displayPic2, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, PreferredInterests, lookingFor} = req.body;
+        
         await User.update(
-            { gender, bio, interests, hobbies, business, futureGoals, importantThing },
+            { profilePhoto, displayPic1, displayPic2, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, PreferredInterests, lookingFor,},
     { where: { UserId: userId } }
         );
 
@@ -177,29 +177,30 @@ async function updateUserProfile(req, res) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-async function updateUserPreference(req, res) {
-    try {
-        const userId = req.user.userId;
-        const {  preferredAge, PreferredInterests, lookingFor, preferredgender} = req.body;
 
-        await UserPreferences.update(
-            {  preferredAge, PreferredInterests, lookingFor, preferredgender},
-            { where: {  UserId: userId } }
+// async function updateUserPreference(req, res) {
+//     try {
+//         const userId = req.user.userId;
+//         const {  preferredAge, PreferredInterests, lookingFor, preferredgender} = req.body;
+
+//         await UserPreferences.update(
+//             {  preferredAge, PreferredInterests, lookingFor, preferredgender},
+//             { where: {  UserId: userId } }
         
-        );
+//         );
 
-        if (updated[0] > 0) {
-            res.json({ message: 'Preferences updated successfully' });
-        } else {
-            res.status(404).json({ message: 'Preferences not found' });
-        }
+//         // if (updated[0] > 0) {
+//             res.json({ message: 'Preferences updated successfully' });
+//         // } else {
+//         //     res.status(404).json({ message: 'Preferences not found' });
+//         // }
 
-    } catch (error) {
-        console.error('Error updating profile:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-}
+//     } catch (error) {
+//         console.error('Error updating profile:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// }
 
 
 
-module.exports = { signup, login, getUserProfile, updateUserProfile , updateUserPreference};
+module.exports = { signup, login, getUserProfile, updateUserProfile};
