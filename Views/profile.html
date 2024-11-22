@@ -18,82 +18,135 @@
         <div class="profile-container">
             <h1>Your Profile</h1>
             <form id="profileForm">
+                <!-- Profile Picture Section -->
                 <div class="profile-picture-section">
                     <label for="profilePic">Main Profile Picture</label>
-                    <input type="file" id="profilePic" name="profilePic">
-                    <label for="displayPic">Additional Picture</label>
-                    <input type="file" id="displayPic" name="displayPic">
+                    <section id="profilePicSection">
+                        <input type="file" id="profilePic" name="profilePic">
+                    </section>
+        
+                    <label for="displayPic1">Additional Picture</label>
+                    <section id="displayPic1Section">
+                        <input type="file" id="displayPic1" name="displayPic1">
+                    </section>
                 </div>
-
+        
+                <!-- Basic Information -->
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" disabled>
-
+        
                 <label for="age">Age</label>
                 <input type="number" id="age" name="age" disabled>
-
+        
                 <label for="gender">Gender</label>
                 <input type="text" id="gender" name="gender" disabled>
-
-                 <!--Preferred Age attribute-->
-                 <label for="prefage">Preferred Age Range</label>
-                 <select id="prefage" name="prefage">
-                     <option value="18-25">18-25</option>
-                     <option value="25-32">25-32</option>
-                 </select>
-
-                
-                <!--Preferred Gender attribute-->
-                <label for="prefgender">Preferred Gender*</label>
-                    <select id="prefgender" name="prefgender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-
-                <!--Preferred Interests attribute-->
-                <label for="prefint"> PreferredInterest</label>
-                    <label>Basic</label>
-                    <input type="checkbox" name="interests" value="Reading"> Reading
-                    <input type="checkbox" name="interests" value="Traveling"> Traveling
-                    <input type="checkbox" name="interests" value="Sports"> Sports
-                    <input type="checkbox" name="interests" value="Cooking"> Cooking<br>
-                    <label>Knowlegde wise</label>
-                    <input type="checkbox" name="interests" value="Coding"> 
-                    <input type="checkbox" name="interests" value="Astronomy">
-
-               
-
-                <!--Relation User is lookingFor attribute-->
-                <label for="lookingfor">What Kind of Relation are you looking for?</label>
-                <select id="lookingfor" name="lookingfor">
+        
+                <!-- Preferred Age Range -->
+                <label for="prefage">Preferred Age Range</label>
+                <select id="prefage" name="prefage">
+                    <option value="18-25">18-25</option>
+                    <option value="25-32">25-32</option>
+                </select>
+        
+                <!-- Preferred Gender -->
+                <label for="prefgender">Preferred Gender</label>
+                <select id="prefgender" name="prefgender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+        
+                <!-- Preferred Interests -->
+                <label for="selfinterests">Your Interests</label>
+                <br>
+                <fieldset>
+                <table>        
+                <th style="font-family:'Times New Roman', Times, serif;">General</th>
+                <tr>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Reading"> Reading</td>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Traveling"> Traveling</td>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Sports"> Sports</td>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Cooking"> Cooking</td>
+            </tr>
+        
+           <th style="font-family:'Times New Roman', Times, serif;">Knowledge-Wise</th>
+                <tr> 
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Coding"> Coding</td>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Astronomy"> Astronomy</td>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Robotics"> Robotics</td>
+                <td><input type="checkbox" id="selfinterests" name="selfinterests" value="Robotics"> Automobiles</td>
+            
+            </tr>
+                </table>
+            </fieldset>
+        
+                <!-- Relation Looking For -->
+                <label for="lookingFor">What Kind of Relation are you looking for?</label>
+                <select id="lookingFor" name="lookingFor">
                     <option value="LongTerm">Long Term Relationship</option>
                     <option value="ShortTerm">Short Term Relationship</option>
                     <option value="AFriend">A Friend</option>
                     <option value="BusinessNetwork">Business Network</option>
                     <option value="Coworker">Co-Worker for a project</option>
                 </select>
-
+        
+                <!-- Additional User Information -->
                 <label for="selfinterests">Your Interests</label>
                 <input type="text" id="selfinterests" name="selfinterests">
-
+        
                 <label for="hobbies">Hobbies</label>
                 <textarea id="hobbies" name="hobbies"></textarea>
-
+        
+                <label for="location">Location</label>
+                <input type="checkbox" id="location" name="location" value="Oshawa"> Oshawa
+                <input type="checkbox" id="location" name="location" value="Courtice"> Courtice
+                <input type="checkbox" id="location" name="location" value="Oshawa"> Ajax
+                <input type="checkbox" id="location" name="location" value="Courtice"> Toronto
+        
+                <label for="program">Program</label>
+                <input type="text" id="program" name="program">
+        
+                <label for="faculty">Faculty</label>
+                <input type="text" id="faculty" name="faculty">
+        
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" min="1" max="5">
+        
                 <label for="business">If you were to start a business, what would it be?</label>
                 <textarea id="business" name="business"></textarea>
-
+        
                 <label for="futureGoals">What are your goals for the future?</label>
                 <textarea id="futureGoals" name="futureGoals"></textarea>
-
+        
                 <label for="importantThing">What is the most important thing in your life?</label>
                 <textarea id="importantThing" name="importantThing"></textarea>
-
+        
                 <label for="bio">Bio</label>
                 <textarea id="bio" name="bio"></textarea>
+        
+                <label for="achievements">Achievements</label>
+                <textarea id="achievements" name="achievements"></textarea>
 
+                <div id="roleContainer" style="display: none;">
+                <label for="role">Role</label>
+                <select id="role" name="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                </div>
+
+                <label for="profileStatus" >Profile Status</label>
+                <select id="profileStatus" name="profileStatus">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                
+        
+                <!-- Submit Button -->
                 <button type="submit">Save Changes</button>
             </form>
         </div>
+        
     </main>
     <!-- <script src="profile.js"></script> -->
     <script>
@@ -104,14 +157,9 @@
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
           });
-        //   const responseforpreference = await fetch('http://localhost:3000/api/auth/preference', {
-        //     headers: {
-        //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-        //     },
-        //   });
 
         const data = await response.json();
-        // const dataforpreference = await responseforpreference.json();
+
         if (response.ok) {
             const calculateAge = (dob) => {
                 const birthDate = new Date(dob);
@@ -123,6 +171,57 @@
             document.getElementById('name').value = `${data.firstName} ${data.lastName}`;
             document.getElementById('gender').value = `${data.gender}`;
             document.getElementById('age').value = calculateAge(data.dateOfBirth);
+            if (data.preferredAge) {
+                document.getElementById('prefage').value = data.preferredAge;
+            }
+            if (data.preferredGender) {
+                document.getElementById('prefgender').value = data.preferredGender;
+            }
+            if (data.interests) {
+                document.querySelectorAll('input[name="selfinterests"]').forEach(checkbox => {
+                    if (data.interests.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            if (data.lookingFor) {
+                document.getElementById('lookingFor').value = data.lookingFor;
+            }
+            if (data.location) {
+                document.querySelectorAll('input[name="location"]').forEach(checkbox => {
+                    if (data.location.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            //document.getElementById('selfinterests').value = data.interests || '';
+            document.getElementById('hobbies').value = data.hobbies || '';
+            document.getElementById('location').value = data.location || '';
+            document.getElementById('program').value = data.program || '';
+            document.getElementById('faculty').value = data.faculty || '';
+            document.getElementById('year').value = data.year || '';
+            document.getElementById('business').value = data.businessToStart || '';
+            document.getElementById('futureGoals').value = data.futureGoals || '';
+            document.getElementById('importantThing').value = data.mostImportantThing || '';
+            document.getElementById('bio').value = data.bio || '';
+            document.getElementById('achievements').value = data.achievements || '';
+            if (data.role === 'admin') {
+                document.getElementById('roleContainer').style.display = 'block';
+                document.getElementById('role').value = data.role;
+            }
+            document.getElementById('profileStatus').value = data.profileStatus || 'active';
+
+            if (data.profilePhoto) {
+                const profilePicSection = document.getElementById('profilePicSection');
+                profilePicSection.innerHTML = `<img src="${data.profilePhoto}" alt="Profile Photo" style="max-width: 100px;">`;
+            }
+            if (data.displayPic1) {
+                const displayPicSection = document.getElementById('displayPic1Section');
+                displayPicSection.innerHTML = `<img src="${data.displayPic1}" alt="Display Picture 1" style="max-width: 100px;">`;
+            }
+
+
+
         } else {
             alert(data.message || 'Error fetching profile data.');
         }
@@ -132,27 +231,49 @@
 
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-    
+            // Get form data
+        const profilePhotoFile = document.getElementById('profilePic').files[0];
+        const displayPic1File = document.getElementById('displayPic1').files[0];
+        // const displayPic2File = document.getElementById('displayPic2').files[0];
+
+        // Convert images to Base64
+        const profilePhoto = profilePhotoFile ? await convertToBase64(profilePhotoFile) : null;
+        const displayPic1 = displayPic1File ? await convertToBase64(displayPic1File) : null;
+        // const displayPic2 = await convertToBase64(displayPic2File);
+        
         const bio = document.getElementById('bio').value;
         const selfinterests = document.getElementById('selfinterests').value;
         const hobbies = document.getElementById('hobbies').value;
+        //need to add html for the below
+        
+        const program = document.getElementById('program').value;
+        const faculty = document.getElementById('faculty').value;
+    const year = document.getElementById('year').value;// need to add the html for above
         const business = document.getElementById('business').value;
         const futureGoals = document.getElementById('futureGoals').value;
         const importantThing = document.getElementById('importantThing').value;
+        const lastlogin = getLastLogin();
+        const achievements = document.getElementById('achievements').value;
         const PreferredAge = document.getElementById('prefage').value;
         const PreferredGender = document.getElementById('prefgender').value;
         
-        const lookingFor = document.getElementById('lookingfor').value;
+        const lookingFor = document.getElementById('lookingFor').value;
 
         const getSelectedCheckboxValues = () => {
-            const checkboxes = document.querySelectorAll('input[name="interests"]:checked');
+            const checkboxes = document.querySelectorAll('input[name="prefinterests"]:checked');
             // Map through NodeList and get the value of each checkbox, then join with a comma
             const values = Array.from(checkboxes).map(checkbox => checkbox.value).join(', ');
             return values;
         };
 
         const PreferredInterests = getSelectedCheckboxValues();
-    
+        const getLocationValues = () => {
+            const checkboxes = document.querySelectorAll('input[name="location"]:checked');
+            // Map through NodeList and get the value of each checkbox, then join with a comma
+            const values = Array.from(checkboxes).map(checkbox => checkbox.value).join(', ');
+            return values;
+        };
+        const location = getLocationValues();
         try {
             const response = await fetch('http://localhost:3000/api/auth/profile', {
                 method: 'PUT',
@@ -160,29 +281,13 @@
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify({bio:bio,interests: selfinterests, hobbies: hobbies,businessToStart: business,futureGoals: futureGoals, mostImportantThing:importantThing,}),
+                
+                body: JSON.stringify({profilePhoto: profilePhoto, displayPic1 : displayPic1, bio: bio, interests: selfinterests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achivements: achievements, prefferredAge : PreferredAge, preferredgender : PreferredGender, PreferredInterests: PreferredInterests, lookingFor: lookingFor}),
+
             });
             const data = await response.json();
 
-            const responseforpreference = await fetch('http://localhost:3000/api/auth/preference', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                    body: JSON.stringify({
-
-                    preferredAge: PreferredAge,
-                    preferredgender: PreferredGender,
-                    PreferredInterests: PreferredInterests,
-                    lookingFor: lookingFor,
-                }),
-            });
-    
-    
-            
-            const dataforpreference = await responseforpreference.json();
-            if (response.ok && responseforpreference.ok) {
+            if (response.ok) {
                 alert('Profile updated successfully!');
             } else {
                 alert(data.message || 'Error updating profile.');
@@ -191,6 +296,15 @@
             console.error('Error updating profile:', error);
         }
     });
+        // Utility function to convert file to Base64
+    function convertToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    }
     
 });
 

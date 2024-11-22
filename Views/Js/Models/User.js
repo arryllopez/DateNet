@@ -112,6 +112,27 @@ const User = sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    preferredAge: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: 'PreferredAgeRange',
+    },
+    preferredgender: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: 'PreferredGender',
+    },
+    PreferredInterests: { 
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: true, 
+        field: 'PreferredInterests',
+    },
+    lookingFor: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field:'TypeOfRelation'
+    },
 }, {
     tableName: 'users', // Explicitly define the table name
     timestamps: false,  // Disable Sequelize's default timestamps (createdAt, updatedAt)
