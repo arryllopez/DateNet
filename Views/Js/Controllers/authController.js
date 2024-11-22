@@ -8,11 +8,15 @@ const UserPreferences = require('../Models/UserPreferences');
 // Signup controller
 async function signup(req, res) {
     console.log("Request body:", req.body); // Debugging log
-    const { username, password, email, firstName, lastName, dateOfBirth } = req.body;
+    const { username, password, email, firstName, lastName, gender,dateOfBirth } = req.body;
 
     // if (!password) {
     //     return res.status(400).json({ message: "Password is required" });
     // }
+    if(!gender){
+        return res.status(400).json({ message: 'Gender is Required!' });
+
+    }
     try {
         // Validate age
         const today = new Date();
@@ -50,6 +54,7 @@ async function signup(req, res) {
             email,
             firstName,
             lastName,
+            gender,
             dateOfBirth,
             // Additional fields can be added here
         });
@@ -73,6 +78,7 @@ async function login(req, res) {
     if (!username || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
     }
+   
     
     try {
         // Find user in the database
