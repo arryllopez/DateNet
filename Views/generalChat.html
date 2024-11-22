@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Chat</title>
+    <link rel="stylesheet" href="generalChat.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <nav>
+                    <ul>
+                        <li><a href="messagesAndChat.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Messages</a></li>
+                        <li><a href="match.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Matches</a></li>
+                        <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg> Global Chat</a></li>
+                        <li><a href="profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Profile</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Chat messages will be dynamically added here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="popup" id="warningPopup">
+        <div class="popup-content">
+            <h2>Warning</h2>
+            <p>Do not share personal information or passwords in this chat!</p>
+            <button id="closeWarningPopup">I understand</button>
+        </div>
+    </div>
+
+    <div class="popup" id="namePopup">
+        <div class="popup-content">
+            <h2>Welcome to the Global Chat</h2>
+            <p>Please enter your name:</p>
+            <input type="text" id="nameInput" placeholder="Your name">
+            <button id="submitName">Join Chat</button>
+        </div>
+    </div>
+
+    <script>
+        let userName = "Anonymous";
+
+        // Show name popup when page loads
+        window.onload = function() {
+            document.getElementById('namePopup').style.display = 'flex';
+        }
+
+        // Handle name submission
+        document.getElementById('submitName').onclick = function() {
+            let nameInput = document.getElementById('nameInput');
+            if (nameInput.value.trim() !== "") {
+                userName = nameInput.value.trim();
+            }
+            document.getElementById('namePopup').style.display = 'none';
+            document.getElementById('warningPopup').style.display = 'flex';
+        }
+
+        // Close warning popup when button is clicked
+        document.getElementById('closeWarningPopup').onclick = function() {
+            document.getElementById('warningPopup').style.display = 'none';
+        }
+
+        // Function to send message
+        function sendMessage() {
+            var input = document.getElementById('messageInput');
+            var message = input.value.trim();
+            if (message) {
+                var chatMessages = document.getElementById('chatMessages');
+                var messageElement = document.createElement('div');
+                messageElement.className = 'message';
+                
+                var nameSpan = document.createElement('span');
+                nameSpan.className = 'user-name';
+                nameSpan.textContent = userName + ": ";
+                
+                var messageSpan = document.createElement('span');
+                messageSpan.textContent = message;
+                
+                messageElement.appendChild(nameSpan);
+                messageElement.appendChild(messageSpan);
+                
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                input.value = '';
+            }
+        }
+
+        // Send message when button is clicked
+        document.getElementById('sendButton').onclick = sendMessage;
+
+        // Send message when Enter key is pressed in the input field
+        document.getElementById('messageInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
+
