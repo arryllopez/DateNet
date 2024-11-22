@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(to bottom, #fce7f3, #e9d5ff);
+    background: linear-gradient(to bottom, #fe6194, #9f1a29);
     min-height: 100vh;
 }
 
@@ -60,7 +60,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #ec4899;
+    color: #d50032;
 }
 
 main {
@@ -108,7 +108,7 @@ main {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 0.5rem;
-    border: 2px solid black; 
+    border: 4px solid black; /* Updated outline color */
     overflow: hidden;
 }
 
@@ -170,6 +170,7 @@ main {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
+   
 }
 
 .nav-button {
@@ -183,6 +184,7 @@ main {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    border : 4px solid black;
 }
 
 .nav-button:hover {
@@ -200,7 +202,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ec4899;
+    background-color: #d50032; /* Updated background color */
     color: white;
     border: none;
     border-radius: 9999px;
@@ -214,7 +216,7 @@ main {
 }
 
 .chat-now-button:hover {
-    background-color: #db2777;
+    background-color: #b8002c; /* Updated hover color */
 }
 
 .chat-now-button svg {
