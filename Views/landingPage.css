@@ -199,23 +199,16 @@ a {
 
 /* Testimonials Section */
 .testimonials {
-  background-color: #f8f9fa;
-  background: linear-gradient(45deg, #ffe6e6, #ffb3b3, #ff6666, #ff1a1a);
-  animation: gradientAnimation 2s ease infinite;
-  padding: 4rem 2rem;
   text-align: center;
+  padding: 4rem 2rem;
+  background-color: #f0f2f5;
 }
 
-@keyframes gradientAnimation {
-  0% {
-      background-position: 0% 50%;
-  }
-  50% {
-      background-position: 100% 50%;
-  }
-  100% {
-      background-position: 0% 50%;
-  }
+.testimonials .wrapper {
+  padding: 4rem 2rem;
+  background-color: #d50032;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
 }
 
 .testimonials h2 {

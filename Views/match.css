@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom, #fce7f3, #e9d5ff);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav ul li a svg {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+header {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0; /* Make the navbar span the full width */
+    background-color: white; /* Red background color */
+    padding: 1rem;
+    color: white; /* White text for better contrast */
+}
+
+/* Style the navigation links */
+nav ul {
+    display: flex;
+    list-style-type: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end; /* Align navigation items to the right */
+}
+
+nav ul li {
+    /* Removed margin-left style */
+}
+
+nav ul li a {
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ec4899;
+}
+
+main {
+    padding: 2rem 0;
+}
+
+.swipe-interface {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.user-card {
+    background-color: transparent;
+    width: 100%;
+    height: 500px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.user-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-front {
+    background-color: #ffffff;
+}
+
+.card-back {
+    background-color: #ffffff;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.user-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.user-info {
+    padding: 1rem;
+}
+
+.user-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.user-bio {
+    color: #4b5563;
+}
+
+.user-details {
+    text-align: left;
+}
+
+.user-details h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.user-details p {
+    margin-bottom: 0.5rem;
+}
+
+.school {
+    display: block;
+}
+
+.swipe-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.swipe-button {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.swipe-button:hover {
+    transform: scale(1.1);
+}
+
+.swipe-button.dislike:hover {
+    background-color: #fee2e2;
+    border-color: #ef4444;
+}
+
+.swipe-button.like:hover {
+    background-color: #dcfce7;
+    border-color: #22c55e;
+}
+
+.swipe-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.dislike svg {
+    color: #ef4444;
+}
+
+.like svg {
+    color: #22c55e;
+}
+
