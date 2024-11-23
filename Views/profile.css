@@ -15,31 +15,35 @@ padding: 20px;
 background-color: #fff;
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-/* .circle-profile {
+.profile-picture-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture-section label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+.profile-picture-section input[type="file"] {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.profile-picture-section img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #ccc;
+    border: 3px solid #007BFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide initially until an image is loaded */
 }
-
-.square-display {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border: 2px solid #ccc;
-}
-
-.edit-icon {
-    display: inline-block;
-    margin-top: 5px;
-    font-size: 14px;
-    color: #007BFF;
-    cursor: pointer;
-    text-decoration: underline;
-} */
-
-
 form {
 display: flex;
 flex-direction: column;
@@ -76,6 +80,7 @@ background-color: #c2185b;
 /* Style the navigation bar */
 nav {
     position: absolute;
+    font-weight :bold;
     top: 0;
     right: 0;
     left: 0; /* Make the navbar span the full width */
