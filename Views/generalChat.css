@@ -28,7 +28,8 @@ nav {
     top: 0;
     right: 0;
     left: 0;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     color: white;
 }
@@ -43,15 +44,16 @@ nav ul {
 }
 
 nav ul li a {
-    color: #4b5563;
+    color: black;
     text-decoration: none;
     transition: color 0.3s ease;
     display: flex;
     align-items: center;
+    font-weight: bold;
 }
 
 nav ul li a:hover {
-    color: #ec4899;
+    color: #FF00C5;
 }
 
 nav ul li a svg {
@@ -77,6 +79,15 @@ main {
     height: calc(100vh - 60px);
 }
 
+.chat-header {
+    background-color: #FF69B4;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    margin: 0;
+    font-size: 24px;
+}
+
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -96,7 +107,7 @@ main {
 
 .message .user-name {
     font-weight: bold;
-    color: #FF1493;
+    color: #FF003C;
     margin-right: 5px;
 }
 
@@ -114,10 +125,15 @@ input[type="text"] {
     border-radius: 20px;
     font-size: 16px;
     background-color: #FFFFFF;
+    color: #000000;
+}
+
+input[type="text"]::placeholder {
+    color: #666666;
 }
 
 button {
-    background-color: #FF69B4;
+    background-color: #FF00C5;
     color: white;
     border: none;
     border-radius: 20px;
@@ -125,11 +141,12 @@ button {
     margin-left: 10px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
 button:hover {
-    background-color: #FF1493;
+    background-color: #FF003C;
+    transform: scale(1.05);
 }
 
 .popup {
@@ -146,12 +163,14 @@ button:hover {
 }
 
 .popup-content {
-    background-color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 10px;
     text-align: center;
     max-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    color: #000000;
+    border: 2px solid #FF00C5;
 }
 
 .popup h2 {
@@ -163,6 +182,12 @@ button:hover {
 .popup p {
     margin-bottom: 20px;
     color: #4b5563;
+}
+
+.popup .small-text {
+    font-size: 14px;
+    color: #333333;
+    margin-top: -10px;
 }
 
 .popup input[type="text"] {
