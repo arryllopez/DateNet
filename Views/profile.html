@@ -13,6 +13,7 @@
             <div class="header-content">
                 <nav>
                     <ul>
+                        <li><span id="greeting" style="color: black; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"></span></li>
                         <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Messages</a></li>
                         <li><a href="match.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Matches</a></li>
                         <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg> Global Chat</a></li>
@@ -29,15 +30,20 @@
             <form id="profileForm">
                 <!-- Profile Picture Section -->
                 <div class="profile-picture-section">
-                    <label for="profilePic">Main Profile Picture</label>
-                    <section id="profilePicSection">
-                        <input type="file" id="profilePic" name="profilePic">
-                    </section>
-        
-                    <label for="displayPic1">Additional Picture</label>
+                   
+                        <label for="profilePic">Main Profile Picture</label>
+                        <section id="profilePicSection">
+                            <!-- <input type="file" id="profilePic" name="profilePic">
+                            <img id="profilePicImage" style="display: none; max-width: 100px;" alt="Profile Photo"> -->
+                            <input type="file" id="profilePic" onchange="previewImage()">
+                             <img id="profilePicPreview" style="max-width: 200px; display: none;">
+                        </section>
+                    <label for="displayPic1">Additional Picture</label>   
                     <section id="displayPic1Section">
-                        <input type="file" id="displayPic1" name="displayPic1">
+                        <input type="file" id="displayPic" onchange="previewdisImage()">
+                             <img id="displayPicPreview" style="max-width: 200px; display: none;">
                     </section>
+                    <!-- <input type="file" id="replacedisplayPic" name="replacedisplayPic" style="display: none;"> -->
                 </div>
         
                 <!-- Basic Information -->
@@ -100,8 +106,8 @@
                 </select>
         
                 <!-- Additional User Information -->
-                <label for="selfinterests">Your Interests</label>
-                <input type="text" id="selfinterests" name="selfinterests">
+                <!-- <label for="selfinterests">Your Interests</label>
+                <input type="text" id="selfinterests" name="selfinterests"> -->
         
                 <label for="hobbies">Hobbies</label>
                 <textarea id="hobbies" name="hobbies"></textarea>
@@ -159,6 +165,45 @@
     </main>
     <!-- <script src="profile.js"></script> -->
     <script>
+        function previewImage() {
+            const file = document.getElementById('profilePic').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function() {
+                document.getElementById('profilePicPreview').src = reader.result;
+                document.getElementById('profilePicPreview').style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('profilePicPreview').src = "";
+                document.getElementById('profilePicPreview').style.display = 'none';
+            }
+        }
+        function previewdisImage() {
+            const file = document.getElementById('displayPic').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function() {
+                document.getElementById('displayPicPreview').src = reader.result;
+                document.getElementById('displayPicPreview').style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('displayPicPreview').src = "";
+                document.getElementById('displayPicPreview').style.display = 'none';
+            }
+        }
+        function displayImageFromDatabase(base64Data) {
+            const imgElement = document.getElementById('profilePicPreview');
+            imgElement.src = base64Data;
+            imgElement.style.display = 'block';
+            imgElement.style.border = '2px solid blue';
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('http://localhost:3000/api/auth/profile', {
@@ -170,88 +215,141 @@
         const data = await response.json();
 
         if (response.ok) {
-            const calculateAge = (dob) => {
-                const birthDate = new Date(dob);
-                const diff = Date.now() - birthDate.getTime();
-                return new Date(diff).getUTCFullYear() - 1970;
-            };
+            
+            console.log("Fetched Profile Data:", data);
 
-            document.getElementById('greeting').innerHTML =" Welcome " +`${data.firstName}`;
-            document.getElementById('name').value = `${data.firstName} ${data.lastName}`;
-            document.getElementById('gender').value = `${data.gender}`;
-            document.getElementById('age').value = calculateAge(data.dateOfBirth);
-            if (data.preferredAge) {
-                document.getElementById('prefage').value = data.preferredAge;
-            }
-            if (data.preferredGender) {
-                document.getElementById('prefgender').value = data.preferredGender;
-            }
-            if (data.interests) {
-                document.querySelectorAll('input[name="selfinterests"]').forEach(checkbox => {
-                    if (data.interests.includes(checkbox.value)) {
-                        checkbox.checked = true;
-                    }
-                });
-            }
-            if (data.lookingFor) {
-                document.getElementById('lookingFor').value = data.lookingFor;
-            }
-            if (data.location) {
-                document.querySelectorAll('input[name="location"]').forEach(checkbox => {
-                    if (data.location.includes(checkbox.value)) {
-                        checkbox.checked = true;
-                    }
-                });
-            }
-            //document.getElementById('selfinterests').value = data.interests || '';
-            document.getElementById('hobbies').value = data.hobbies || '';
-            document.getElementById('location').value = data.location || '';
-            document.getElementById('program').value = data.program || '';
-            document.getElementById('faculty').value = data.faculty || '';
-            document.getElementById('year').value = data.year || '';
-            document.getElementById('business').value = data.businessToStart || '';
-            document.getElementById('futureGoals').value = data.futureGoals || '';
-            document.getElementById('importantThing').value = data.mostImportantThing || '';
-            document.getElementById('bio').value = data.bio || '';
-            document.getElementById('achievements').value = data.achievements || '';
-            if (data.role === 'admin') {
-                document.getElementById('roleContainer').style.display = 'block';
-                document.getElementById('role').value = data.role;
-            }
-            document.getElementById('profileStatus').value = data.profileStatus || 'active';
+                const calculateAge = (dob) => {
+                    const birthDate = new Date(dob);
+                    const diff = Date.now() - birthDate.getTime();
+                    return new Date(diff).getUTCFullYear() - 1970;
+                };
 
+                document.getElementById('greeting').innerHTML =" Welcome " +`${data.firstName}`;
+                document.getElementById('name').value = `${data.firstName} ${data.lastName}`;
+                document.getElementById('gender').value = `${data.gender}`;
+                document.getElementById('age').value = calculateAge(data.dateOfBirth);
+                if (data.preferredAge) {
+                    document.getElementById('prefage').value = data.preferredAge;
+                }
+                if (data.preferredgender) {
+                    document.getElementById('prefgender').value = data.preferredgender;
+                }
+                if (data.interests) {
+                    document.querySelectorAll('input[name="selfinterests"]').forEach(checkbox => {
+                        if (data.interests.includes(checkbox.value)) {
+                            checkbox.checked = true;
+                        }
+                    });
+                }
+                if (data.lookingFor) {
+                    document.getElementById('lookingFor').value = data.lookingFor;
+                }
+                if (data.location) {
+                    document.querySelectorAll('input[name="location"]').forEach(checkbox => {
+                        if (data.location.includes(checkbox.value)) {
+                            checkbox.checked = true;
+                        }
+                    });
+                }
+                //document.getElementById('selfinterests').value = data.interests || '';
+                document.getElementById('hobbies').value = data.hobbies || '';
+                document.getElementById('location').value = data.location || '';
+                document.getElementById('program').value = data.program || '';
+                document.getElementById('faculty').value = data.faculty || '';
+                document.getElementById('year').value = data.year || '';
+                document.getElementById('business').value = data.businessToStart || '';
+                document.getElementById('futureGoals').value = data.futureGoals || '';
+                document.getElementById('importantThing').value = data.mostImportantThing || '';
+                document.getElementById('bio').value = data.bio || '';
+                document.getElementById('achievements').value = data.achievements || '';
+                if (data.role === 'admin') {
+                    document.getElementById('roleContainer').style.display = 'block';
+                    document.getElementById('role').value = data.role;
+                }
+                document.getElementById('profileStatus').value = data.profileStatus || 'active';
+ 
+            //     if (data.profilePhoto) {
+            //         // loadImage(data.profilePhoto, 'profilePicImage');
+            //         console.log("Profile Photo Base64 Data:", data.profilePhoto);
+            //         const profilePicImage = document.getElementById('profilePicImage');
+            //     profilePicImage.src = data.profilePhoto;
+            //     profilePicImage.style.display = 'block';
+               
+            //     }else {
+            //     console.warn("No profile photo found.");
+            // }
+                
+            //     if (data.displayPic1) {
+            //         // loadImage(data.displayPic1, 'displayPic1Image');
+            //         console.log("Display Picture 1 Base64 Data:", data.displayPic1);
+            //         const displayPic1Image = document.getElementById('displayPic1Image');
+            //         displayPic1Image.src = data.displayPic1;
+            //         displayPic1Image.style.display = 'block';
+                    
+            //     } else {
+            //         console.warn("No additional display picture found.");
+            // }
+
+            // loadImage(data.profilePhoto, 'profilePicImage'); 
+            // loadImage(data.displayPic1, 'displayPic1Image');
+            
             if (data.profilePhoto) {
-                const profilePicSection = document.getElementById('profilePicSection');
-                profilePicSection.innerHTML = `<img src="${data.profilePhoto}" alt="Profile Photo" style="max-width: 100px;">`;
+                displayImageFromDatabase(data.profilePhoto);
             }
             if (data.displayPic1) {
-                const displayPicSection = document.getElementById('displayPic1Section');
-                displayPicSection.innerHTML = `<img src="${data.displayPic1}" alt="Display Picture 1" style="max-width: 100px;">`;
+                
             }
-
-
-
-        } else {
-            alert(data.message || 'Error fetching profile data.');
-        }
-    } catch (error) {
+            
+                
+            } else {
+                alert(data.message || 'Error fetching profile data.');
+            }
+        } catch (error) {
         console.error('Error fetching profile data:', error);
     }
+    function convertToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    }
+    function loadImage(data, imageId) {
+    const imageElement = document.getElementById(imageId);
+    if (data && imageElement) {
+        imageElement.src = data;  // Assuming data is a URL or Base64 string
+        imageElement.style.display = 'block';  // Make sure the element is visible
+    }
+}
+
+    // document.getElementById('profilePic').addEventListener('change', async (event) => {
+    //     const file = event.target.files[0];
+    //         if (file) {
+    //             const base64 = await convertToBase64(file);
+    //             document.getElementById('profilePicImage').src = base64;
+    //             document.getElementById('profilePicImage').style.display = 'block';
+    //         }
+    //     });
+
+        // document.getElementById('displayPic1').addEventListener('change', async (event) => {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         const base64 = await convertToBase64(file);
+        //         document.getElementById('displayPic1Image').src = base64;
+        //         document.getElementById('displayPic1Image').style.display = 'block';
+        //     }
+        // });
+    
 
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-            // Get form data
-        const profilePhotoFile = document.getElementById('profilePic').files[0];
-        const displayPic1File = document.getElementById('displayPic1').files[0];
-        // const displayPic2File = document.getElementById('displayPic2').files[0];
+        const dpimageBase64 = document.getElementById('profilePicPreview').src;
+        const displayimageBase64 = document.getElementById('displayPicPreview').src;
 
-        // Convert images to Base64
-        const profilePhoto = profilePhotoFile ? await convertToBase64(profilePhotoFile) : null;
-        const displayPic1 = displayPic1File ? await convertToBase64(displayPic1File) : null;
-        // const displayPic2 = await convertToBase64(displayPic2File);
         
         const bio = document.getElementById('bio').value;
-        const selfinterests = document.getElementById('selfinterests').value;
+        // const selfinterests = document.getElementById('selfinterests').value;
         const hobbies = document.getElementById('hobbies').value;
         //need to add html for the below
         
@@ -261,7 +359,9 @@
         const business = document.getElementById('business').value;
         const futureGoals = document.getElementById('futureGoals').value;
         const importantThing = document.getElementById('importantThing').value;
-        const lastlogin = getLastLogin();
+
+      
+        const lastlogin = new Date().toISOString();
         const achievements = document.getElementById('achievements').value;
         const PreferredAge = document.getElementById('prefage').value;
         const PreferredGender = document.getElementById('prefgender').value;
@@ -269,13 +369,13 @@
         const lookingFor = document.getElementById('lookingFor').value;
 
         const getSelectedCheckboxValues = () => {
-            const checkboxes = document.querySelectorAll('input[name="prefinterests"]:checked');
+            const checkboxes = document.querySelectorAll('input[name="selfinterests"]:checked');
             // Map through NodeList and get the value of each checkbox, then join with a comma
             const values = Array.from(checkboxes).map(checkbox => checkbox.value).join(', ');
             return values;
         };
 
-        const PreferredInterests = getSelectedCheckboxValues();
+        const Interests = getSelectedCheckboxValues();
         const getLocationValues = () => {
             const checkboxes = document.querySelectorAll('input[name="location"]:checked');
             // Map through NodeList and get the value of each checkbox, then join with a comma
@@ -291,11 +391,9 @@
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
                 
-                body: JSON.stringify({profilePhoto: profilePhoto, displayPic1 : displayPic1, bio: bio, interests: selfinterests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achivements: achievements, prefferredAge : PreferredAge, preferredgender : PreferredGender, PreferredInterests: PreferredInterests, lookingFor: lookingFor}),
-
+                body: JSON.stringify({profilePhoto: dpimageBase64, displayPic1:displayimageBase64,  bio: bio, interests: Interests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achievements: achievements, preferredAge : PreferredAge, preferredgender : PreferredGender, lookingFor: lookingFor}),
             });
             const data = await response.json();
-
             if (response.ok) {
                 alert('Profile updated successfully!');
             } else {
@@ -305,18 +403,7 @@
             console.error('Error updating profile:', error);
         }
     });
-        // Utility function to convert file to Base64
-    function convertToBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
-        });
-    }
-    
 });
-
     </script>
 </body>
 </html>

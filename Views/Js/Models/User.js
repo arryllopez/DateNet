@@ -42,10 +42,12 @@ const User = sequelize.define('users', {
     profilePhoto: {
         type: DataTypes.STRING,
         allowNull: true,
+        field:'ProfilePhoto',
     },
     displayPic1: {
         type: DataTypes.STRING,
         allowNull: true,
+        field:'DisplayPic1',
     },
     displayPic2: {
         type: DataTypes.STRING,
@@ -75,6 +77,7 @@ const User = sequelize.define('users', {
     faculty: {
         type: DataTypes.STRING,
         allowNull: true,
+        field:'Faculty',
     },
     year: {
         type: DataTypes.INTEGER,
@@ -107,6 +110,7 @@ const User = sequelize.define('users', {
     achievements: {
         type: DataTypes.TEXT,
         allowNull: true,
+        field:'Achievements',
     },
     role: {
         type: DataTypes.STRING,

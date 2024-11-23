@@ -164,10 +164,10 @@ async function getUserProfile(req, res) {
 async function updateUserProfile(req, res) {
     try {
         const userId = req.user.userId;
-        const {profilePhoto, displayPic1, displayPic2, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, PreferredInterests, lookingFor} = req.body;
+        const {profilePhoto,displayPic1,  bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, lookingFor} = req.body;
         
         await User.update(
-            { profilePhoto, displayPic1, displayPic2, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, PreferredInterests, lookingFor,},
+            { profilePhoto,displayPic1, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, lookingFor,},
     { where: { UserId: userId } }
         );
 
