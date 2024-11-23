@@ -2,31 +2,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const userCard = document.querySelector('.user-card');
     const prevButton = document.querySelector('.nav-button.prev');
     const nextButton = document.querySelector('.nav-button.next');
+    const messagePrompt = document.getElementById('message-prompt');
+    const promptUserName = document.getElementById('prompt-user-name');
+    const sendMessageBtn = document.getElementById('send-message-btn');
+    const cancelMessageBtn = document.getElementById('cancel-message-btn');
+    const messageInputPrompt = document.getElementById('message-input-prompt');
+    const inputPromptUserName = document.getElementById('input-prompt-user-name');
+    const messageInput = document.getElementById('message-input');
+    const submitMessageBtn = document.getElementById('submit-message-btn');
+    const cancelInputBtn = document.getElementById('cancel-input-btn');
 
     const users = [
         {
-            name: 'Alice Johnson',
-            age: 28,
-            image: '/placeholder.svg?height=400&width=300',
+            name: 'Anthony George',
+            age: 21,
+            image: 'Images/randomPerson.jpg',
             bio: 'Adventure seeker and coffee enthusiast',
-            school: 'University of Example',
+            school: 'Carleton University',
             lookingFor: 'Someone to share adventures and quiet moments alike.'
         },
         {
-            name: 'Bob Smith',
-            age: 32,
-            image: '/placeholder.svg?height=400&width=300',
-            bio: 'Tech enthusiast and amateur chef',
-            school: 'Tech Institute',
+            name: 'Tony Palermo',
+            age: 20,
+            image: 'Images/randomPerson2.jpg',
+            bio: 'Business Major and aspiring Real Estate Agent',
+            school: 'Toronto Metropolitan University',
             lookingFor: 'A partner to explore new cuisines and gadgets with.'
         },
         {
             name: 'Carol Davis',
-            age: 26,
-            image: '/placeholder.svg?height=400&width=300',
+            age: 19,
+            image: 'Images/randomPerson3.jpg',
             bio: 'Yoga instructor and nature lover',
-            school: 'Greendale Community College',
+            school: 'Durham College',
             lookingFor: 'Someone who appreciates mindfulness and outdoor activities.'
+        },
+        { 
+            name: 'Daniel Murray', 
+            age: 19, 
+            image: 'Images/randomPerson4.jpg', 
+            bio: 'Cooking enthusiast, basketball fanatic', 
+            school: 'Ontario Tech University', 
+            lookingFor: 'A kind and caring person who will love my cooking!' 
         }
     ];
 
@@ -88,17 +105,116 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     nextButton.addEventListener('click', () => {
-        if (!isTransitioning) {
-            isTransitioning = true;
-            currentUserIndex = (currentUserIndex + 1) % users.length;
-            updateUserCard(currentUserIndex);
-            setTimeout(() => {
-                isTransitioning = false;
-            }, 500);
+        showMessagePrompt();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.chat-now-button')) {
+            showMessagePrompt();
         }
     });
+
+    function showMessagePrompt() {
+        const currentUser = users[currentUserIndex];
+        promptUserName.textContent = currentUser.name;
+        messagePrompt.style.display = 'flex';
+    }
+
+    function showMessageInputPrompt() {
+        const currentUser = users[currentUserIndex];
+        inputPromptUserName.textContent = currentUser.name;
+        messageInputPrompt.style.display = 'flex';
+    }
+
+    sendMessageBtn.addEventListener('click', () => {
+        messagePrompt.style.display = 'none';
+        showMessageInputPrompt();
+    });
+
+    cancelMessageBtn.addEventListener('click', () => {
+        messagePrompt.style.display = 'none';
+    });
+
+    submitMessageBtn.addEventListener('click', () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            console.log(`Sending message to ${users[currentUserIndex].name}: ${message}`);
+            
+            // Store the message in localStorage
+            localStorage.setItem('lastMessage', JSON.stringify({
+                user: users[currentUserIndex].name,
+                message: message,
+                timestamp: new Date().toISOString()
+            }));
+            
+            messageInput.value = '';
+            messageInputPrompt.style.display = 'none';
+            // Here you would typically send the message to a server
+            // For now, we'll just move to the next user
+            if (!isTransitioning) {
+                isTransitioning = true;
+                currentUserIndex = (currentUserIndex + 1) % users.length;
+                updateUserCard(currentUserIndex);
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 500);
+            }
+        }
+    });
+
+    cancelInputBtn.addEventListener('click', () => {
+        messageInput.value = '';
+        messageInputPrompt.style.display = 'none';
+    });
+
+
+    submitMessageBtn.addEventListener('click', () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            console.log(`Sending message to ${users[currentUserIndex].name}: ${message}`);
+            
+            // Store the message in localStorage
+            localStorage.setItem('lastMessage', JSON.stringify({
+                user: users[currentUserIndex].name,
+                message: message,
+                timestamp: new Date().toISOString()
+            }));
+            
+            messageInput.value = '';
+            messageInputPrompt.style.display = 'none';
+
+            // Show message sent popup
+            showMessageSentPopup();
+
+            // Here you would typically send the message to a server
+            // For now, we'll just move to the next user
+            if (!isTransitioning) {
+                isTransitioning = true;
+                currentUserIndex = (currentUserIndex + 1) % users.length;
+                updateUserCard(currentUserIndex);
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 500);
+            }
+        }
+    });
+
+    function showMessageSentPopup() {
+        const popup = document.createElement('div');
+        popup.className = 'message-sent-popup';
+        popup.textContent = 'Message sent successfully!';
+        document.body.appendChild(popup);
+
+        setTimeout(() => {
+            popup.remove();
+        }, 3000);
+    }
+
+
+
+
+
 
     // Initialize with the first user
     updateUserCard(currentUserIndex);
 });
-

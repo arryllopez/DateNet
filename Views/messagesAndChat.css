@@ -253,7 +253,8 @@ nav ul {
 }
 
 nav ul li a {
-    color: #4b5563;
+    color: black;
+    font-weight :bold;
     text-decoration: none;
     transition: color 0.3s ease;
     display: flex;
@@ -266,4 +267,17 @@ nav ul li a:hover {
 
 nav ul li a svg {
     margin-right: 0.5rem;
+}
+
+
+.message-sent-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    z-index: 1000;
 }
