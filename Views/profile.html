@@ -14,7 +14,6 @@
                 <nav>
                     <ul>
                         <li><span id="greeting" style="color: black; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"></span></li>
-                        <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Messages</a></li>
                         <li><a href="messagesAndChat.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Messages</a></li>
                         <li><a href="match.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Matches</a></li>
                         <li><a href="generalChat.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg> Global Chat</a></li>
@@ -39,12 +38,6 @@
                             <input type="file" id="profilePic" onchange="previewImage()">
                              <img id="profilePicPreview" style="max-width: 200px; display: none;">
                         </section>
-                    <label for="displayPic1">Additional Picture</label>   
-                    <section id="displayPic1Section">
-                        <input type="file" id="displayPic" onchange="previewdisImage()">
-                             <img id="displayPicPreview" style="max-width: 200px; display: none;">
-                    </section>
-                    <!-- <input type="file" id="replacedisplayPic" name="replacedisplayPic" style="display: none;"> -->
                 </div>
         
                 <!-- Basic Information -->
@@ -182,22 +175,6 @@
                 document.getElementById('profilePicPreview').style.display = 'none';
             }
         }
-        function previewdisImage() {
-            const file = document.getElementById('displayPic').files[0];
-            const reader = new FileReader();
-
-            reader.onloadend = function() {
-                document.getElementById('displayPicPreview').src = reader.result;
-                document.getElementById('displayPicPreview').style.display = 'block';
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                document.getElementById('displayPicPreview').src = "";
-                document.getElementById('displayPicPreview').style.display = 'none';
-            }
-        }
         function displayImageFromDatabase(base64Data) {
             const imgElement = document.getElementById('profilePicPreview');
             imgElement.src = base64Data;
@@ -297,9 +274,9 @@
             if (data.profilePhoto) {
                 displayImageFromDatabase(data.profilePhoto);
             }
-            if (data.displayPic1) {
+            // if (data.displayPic1) {
                 
-            }
+            // }
             
                 
             } else {
@@ -346,7 +323,7 @@
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const dpimageBase64 = document.getElementById('profilePicPreview').src;
-        const displayimageBase64 = document.getElementById('displayPicPreview').src;
+        // const displayimageBase64 = document.getElementById('displayPicPreview').src;
 
         
         const bio = document.getElementById('bio').value;
@@ -392,7 +369,7 @@
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
                 
-                body: JSON.stringify({profilePhoto: dpimageBase64, displayPic1:displayimageBase64,  bio: bio, interests: Interests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achievements: achievements, preferredAge : PreferredAge, preferredgender : PreferredGender, lookingFor: lookingFor}),
+                body: JSON.stringify({profilePhoto: dpimageBase64, bio: bio, interests: Interests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achievements: achievements, preferredAge : PreferredAge, preferredgender : PreferredGender, lookingFor: lookingFor}),
             });
             const data = await response.json();
             if (response.ok) {

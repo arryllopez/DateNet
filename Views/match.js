@@ -1,4 +1,11 @@
+function logout() {
+        
+    localStorage.removeItem('token'); 
+    
+    window.location.href = 'login.html';
+}
 document.addEventListener('DOMContentLoaded', () => {
+   
     const userCard = document.querySelector('.user-card');
     const prevButton = document.querySelector('.nav-button.prev');
     const nextButton = document.querySelector('.nav-button.next');
