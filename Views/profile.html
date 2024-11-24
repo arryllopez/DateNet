@@ -388,7 +388,14 @@ nav ul li a svg {
         }
         function displayImageFromDatabase(base64Data) {
             const imgElement = document.getElementById('profilePicPreview');
+            // imgElement.src = base64Data;
+            // imgElement.src = `data:image/jpeg;base64,${base64Data}`;
+            if (base64Data.startsWith('data:image')) {
             imgElement.src = base64Data;
+        } else {
+            // Add the prefix if it's not already included
+            imgElement.src = `data:image/jpeg;base64,${base64Data}`;
+        }
             imgElement.style.display = 'block';
             // imgElement.style.border = '2px solid blue';
         }
@@ -457,7 +464,6 @@ nav ul li a svg {
                     document.getElementById('role').value = data.role;
                     document.getElementById('managetab').style.display = 'block';
                     document.getElementById('managetab').style.fontSize = 'bold';
-                    
                 }
                 document.getElementById('profileStatus').value = data.profileStatus || 'active';
  
@@ -577,6 +583,7 @@ nav ul li a svg {
             return values;
         };
         const location = getLocationValues();
+        const ROLE = document.getElementById('role').value ;
         try {
             const response = await fetch('http://localhost:3000/api/auth/profile', {
                 method: 'PUT',
@@ -585,7 +592,7 @@ nav ul li a svg {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
                 
-                body: JSON.stringify({profilePhoto: dpimageBase64, bio: bio, interests: Interests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achievements: achievements, preferredAge : PreferredAge, preferredgender : PreferredGender, lookingFor: lookingFor}),
+                body: JSON.stringify({profilePhoto: dpimageBase64, bio: bio, interests: Interests, hobbies: hobbies, location : location , program :program ,faculty: faculty,  year: year, futureGoals: futureGoals, businessToStart: business, mostImportantThing: importantThing, lastlogin: lastlogin, achievements: achievements, preferredAge : PreferredAge, preferredgender : PreferredGender, lookingFor: lookingFor, role: ROLE}),
             });
             const data = await response.json();
             if (response.ok) {

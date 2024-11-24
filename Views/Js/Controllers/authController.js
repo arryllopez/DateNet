@@ -164,10 +164,10 @@ async function getUserProfile(req, res) {
 async function updateUserProfile(req, res) {
     try {
         const userId = req.user.userId;
-        const {profilePhoto,displayPic1,  bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, lookingFor} = req.body;
+        const {profilePhoto,displayPic1,  bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, lookingFor, role} = req.body;
         
         await User.update(
-            { profilePhoto,displayPic1, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, lookingFor,},
+            { profilePhoto,displayPic1, bio, interests, hobbies, location , program ,faculty, year, futureGoals, businessToStart, mostImportantThing, lastLogin, achievements, preferredAge, preferredgender, lookingFor,role,},
     { where: { UserId: userId } }
         );
 
@@ -178,29 +178,82 @@ async function updateUserProfile(req, res) {
     }
 }
 
-// async function updateUserPreference(req, res) {
-//     try {
-//         const userId = req.user.userId;
-//         const {  preferredAge, PreferredInterests, lookingFor, preferredgender} = req.body;
+async function getUsers(req, res) {
+    console.log("Fetching users...");
+    try {
+        const users = await User.findAll({
+            attributes: ['UserId', 'firstName', 'lastName', 'email'] // Specify the fields you want to retrieve
+        });
+        res.status(200).json({ users });
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
-//         await UserPreferences.update(
-//             {  preferredAge, PreferredInterests, lookingFor, preferredgender},
-//             { where: {  UserId: userId } }
-        
-//         );
+async function createUser(req, res) {
+    const { firstName, lastName, email, password } = req.body;
+    try {
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already in use' });
+        }
 
-//         // if (updated[0] > 0) {
-//             res.json({ message: 'Preferences updated successfully' });
-//         // } else {
-//         //     res.status(404).json({ message: 'Preferences not found' });
-//         // }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await User.create({
+            firstName,
+            lastName,
+            email,
+            passwordHash: hashedPassword
+        });
 
-//     } catch (error) {
-//         console.error('Error updating profile:', error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     }
-// }
+        res.status(201).json({ message: 'User created successfully', userId: newUser.UserId });
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+async function updateUser(req, res) {
+    const userId = req.params.id;
+    const { firstName, lastName, email } = req.body;
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.firstName = firstName || user.firstName;
+        user.lastName = lastName || user.lastName;
+        user.email = email || user.email;
+        await user.save();
+
+        res.json({ message: 'User updated successfully' });
+    } catch (error) {
+        console.error('Error updating user:', error);
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({ message: 'Email already in use' });
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+async function deleteUser(req, res) {
+    const userId = req.params.id;
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        await user.destroy();
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 
 
-module.exports = { signup, login, getUserProfile, updateUserProfile};
+module.exports = { signup, login, getUserProfile, updateUserProfile,getUsers, createUser, updateUser, deleteUser};

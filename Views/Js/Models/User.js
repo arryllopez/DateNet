@@ -115,6 +115,7 @@ const User = sequelize.define('users', {
     role: {
         type: DataTypes.STRING,
         allowNull: true,
+        field:'Role',
     },
     preferredAge: {
         type: DataTypes.STRING,
