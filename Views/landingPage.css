@@ -213,13 +213,11 @@ a {
 
 .testimonials h2 {
   color: #fff;
-  -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: black;
   font-size: 3rem;
   margin-bottom: 2rem;
-  font-family: "Modak", system-ui;
-  font-weight: 400;
-  font-style: normal;
+  font-family: 'Newsreader', serif;
+  
+  
 }
 
 .testimonial-container {
