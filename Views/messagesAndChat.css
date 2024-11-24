@@ -43,39 +43,9 @@ body {
     font-weight: 600;
 }
 
-.compose-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #050505;
-}
 
-.stories-section {
-    padding: 16px;
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    border-bottom: 1px solid #e4e6eb;
-}
 
-.story {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
 
-.story-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 3px solid #e4e6eb;
-}
-
-.story span {
-    font-size: 0.8rem;
-    color: #65676b;
-}
 
 .messages-section {
     flex-grow: 1;
