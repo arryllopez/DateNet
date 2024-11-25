@@ -19,16 +19,15 @@ app.use('/api/match', matchRoutes);
 // Error handling middleware (should be used after routes)
 app.use(errorHandler);
 
-// Test database connection
+// Testing database connection
 sequelize.authenticate()
     .then(() => console.log('Database connected...'))
     .catch(err => console.error('Error connecting to the database:', err));
 
-// Sync models with the database (use only in development)
+// Syncing models with the database
 sequelize.sync({ force: false })
     .then(() => console.log('Database synced'))
     .catch(err => console.error('Error syncing database:', err));
 
-// Set up server to listen on a port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

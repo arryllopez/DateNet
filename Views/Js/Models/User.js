@@ -32,7 +32,7 @@ const User = sequelize.define('users', {
     dateOfBirth: {
         type: DataTypes.DATE,
         allowNull: false,
-        field: 'DateOfBirth', // Match the exact column name
+        field: 'DateOfBirth', 
     },
     gender: {
         type: DataTypes.STRING,
@@ -56,7 +56,7 @@ const User = sequelize.define('users', {
     bio: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'Biography', // Match the exact column name
+        field: 'Biography', 
     },
     interests: {
         type: DataTypes.TEXT,
@@ -90,22 +90,22 @@ const User = sequelize.define('users', {
     businessToStart: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'BusinessToStart', // Match the exact column name
+        field: 'BusinessToStart', 
     },
     mostImportantThing: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'MostImportantThing', // Match the exact column name
+        field: 'MostImportantThing', 
     },
     lastLogin: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: 'LastLogin', // Match the exact column name
+        field: 'LastLogin', 
     },
     profileStatus: {
         type: DataTypes.STRING,
         allowNull: true,
-        field: 'ProfileStatus', // Match the exact column name
+        field: 'ProfileStatus', 
     },
     achievements: {
         type: DataTypes.TEXT,
@@ -139,8 +139,8 @@ const User = sequelize.define('users', {
         field:'TypeOfRelation'
     },
 }, {
-    tableName: 'users', // Explicitly define the table name
-    timestamps: false,  // Disable Sequelize's default timestamps (createdAt, updatedAt)
+    tableName: 'users', 
+    timestamps: false,  // Disabling Sequelize's default timestamps (createdAt, updatedAt)
 });
 
 module.exports = User;

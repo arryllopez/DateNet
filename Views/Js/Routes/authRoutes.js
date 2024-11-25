@@ -1,7 +1,7 @@
 //user authenticationconst express = require('express');
 const express = require('express');
 const { signup, login, getUserProfile, updateUserProfile, getUsers, createUser, updateUser, deleteUser} = require('../controllers/authController');
-const authenticateToken = require('../middleware/authMiddleware'); // Import the middleware
+const authenticateToken = require('../middleware/authMiddleware'); 
 
 const router = express.Router();
 

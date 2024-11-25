@@ -105,6 +105,7 @@ async function login(req, res) {
     }
 }
 
+// Future Enhancement 
 
 // Real time validation trial but ended in failure 
 // async function checkUsername(req, res) {
