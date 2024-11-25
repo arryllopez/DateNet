@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    
+    <!--NAV  BAR-->
     <header>
         <div class="container">
             <div class="header-content">
@@ -26,88 +28,84 @@
     </header>
 
 
+
+
+
+
     <div class="inbox-container">
         <div class="inbox-sidebar">
             <div class="inbox-header">
-
-            <!--FETCHING FIRST AND LAST NAME FROM THE DATABASE-->
-                <script>
-                    document.addEventListener('DOMContentLoaded', async () => {
-                        try {
-                            // Fetch the profile data
-                            const response = await fetch('http://localhost:3000/api/auth/profile', {
-                                headers: {
-                                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                                },
-                            });
-                
-                            // Parse JSON response
-                            const data = await response.json();
-                
-                            if (response.ok) {
-                                // Update the DOM with user data
-                                document.getElementById('nameOfUser').innerHTML = `${data.firstName} ${data.lastName}`;
-                            } else {
-                                // Handle error from API
-                                alert(data.message || 'Error fetching profile data.');
-                            }
-                        } catch (error) {
-                            // Log errors in the console
-                            console.error('Error fetching profile data:', error);
-                        }
-                    });
-                </script>
-            <!--FETCHING FIRST AND LAST NAME FROM THE DATABASE-->
-
-
-
-                <h1 id = "nameOfUser"></h1>
-                <button class="compose-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                </button>
+                <h1 id="nameOfUser"></h1> 
             </div>
 
-       
-<!--MESSAGES SECTION-->
             <div class="messages-section">
                 <div class="messages-header">
                     <h2>Messages</h2>
-                    
                 </div>
 
-                <div id = "message-list" class="message-list">
-                    
+                <div id="message-list" class="message-list">
+                    <!-- Messages will be dynamically added here -->
                 </div>
-            
             </div>
-
         </div>
 
-        <div class="empty-state">
+        <div id="empty-state" class="empty-state">
             <div class="empty-content">
                 <div class="messenger-icon">
-                    <img src = "Images/social-network.png">
+                    <img src="Images/social-network.png" alt="Messenger Icon">
                 </div>
-                <h2>FInd a Match Now!</h2>
-                
-                <a href = "match.html"> <button class="send-message-btn">Find Match</button></a>
-             
+                <h2>Find a Match Now!</h2>
+                <a href="match.html"><button class="send-message-btn">Find Match</button></a>
+            </div>
+        </div>
+
+        <div id="direct-message" class="direct-message" style="display: none;">
+            <div class="direct-message-header">
+                <h2>Chat with <span id="chat-user"></span></h2>
+            </div>
+            <div class="direct-message-content">
+                <!-- Messages will be dynamically added here -->
+            </div>
+            <div class="direct-message-input">
+                <input type="text" placeholder="Type a message...">
+                <button id="send-button">Send</button>
             </div>
         </div>
     </div>
 
-
-    <!--showing messages-->
     <script>
         function logout() {
-        
-        localStorage.removeItem('token'); 
-        
-        window.location.href = 'login.html';
-    }
-        document.addEventListener('DOMContentLoaded', () => {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch the profile data
+                const response = await fetch('http://localhost:3000/api/auth/profile', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+
+                // Parse JSON response
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Update the DOM with user data
+                    document.getElementById('nameOfUser').innerHTML = `${data.firstName} ${data.lastName}`;
+                } else {
+                    // Handle error from API
+                    alert(data.message || 'Error fetching profile data.');
+                }
+            } catch (error) {
+                // Log errors in the console
+                console.error('Error fetching profile data:', error);
+            }
+
             const messageList = document.getElementById('message-list');
-            const emptyState = document.querySelector('.empty-state');
+            const emptyState = document.getElementById('empty-state');
+            const directMessage = document.getElementById('direct-message');
             const lastMessage = JSON.parse(localStorage.getItem('lastMessage'));
 
             if (lastMessage) {
@@ -124,14 +122,21 @@
                 `;
                 messageList.appendChild(messageItem);
 
-              
+                // Add click event listener to the message item
+                messageItem.addEventListener('click', () => {
+                    emptyState.style.display = 'none';
+                    directMessage.style.display = 'flex';
+                    document.getElementById('chat-user').textContent = lastMessage.user;
+                    // Clear previous messages
+                    document.querySelector('.direct-message-content').innerHTML = '';
+                    // Add the last message
+                    const messageElement = document.createElement('p');
+                    messageElement.textContent = lastMessage.message;
+                    document.querySelector('.direct-message-content').appendChild(messageElement);
+                });
             }
         });
     </script>
-
-
-
-
-
 </body>
 </html>
+
